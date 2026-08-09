@@ -70,12 +70,16 @@ body {
   align-items: center;
   z-index: 9999;
   cursor: zoom-out;
+  touch-action: none;
 }
 .overlay img {
   max-width: 90%;
   max-height: 90%;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  touch-action: none;
+  cursor: zoom-in;
+  transition: transform 0.25s ease;
 }
 
 /* Stampel Sold */
@@ -93,16 +97,21 @@ body {
 .card.sold .btn-buy { background: #ccc !important; cursor: not-allowed; }
 
 /* Filter & Grid Produk */
-.filter-wrapper { display: flex; gap: 10px; margin: 20px 0; overflow-x: auto; padding-bottom: 5px; }
-.filter-btn { padding: 8px 18px; border-radius: 10px; border: 1px solid var(--primary); background: white; color: var(--primary); cursor: pointer; font-weight: 600; white-space: nowrap; }
+.filter-wrapper { display: flex; gap: 12px; margin: 20px 0; overflow-x: auto; padding-bottom: 5px; }
+.filter-btn { padding: 10px 18px; border-radius: 999px; border: none; background: white; color: var(--primary); cursor: pointer; font-weight: 600; white-space: nowrap; box-shadow: 0 4px 14px rgba(0,0,0,0.06); }
 .filter-btn.active { background: var(--primary); color: white; }
 
 /* --- SISTEM PRIORITAS URUTAN PRODUK (OTOMATIS) --- */
 .produk-grid { 
   display: grid !important; 
   grid-template-columns: repeat(2, 1fr); 
-  gap: 15px; 
+  gap: 14px; 
   grid-auto-flow: row dense;
+}
+
+/* Tablet ke atas: 3 kolom biar ruang container 1000px kepakai maksimal */
+@media (min-width: 640px) {
+  .produk-grid { grid-template-columns: repeat(3, 1fr); gap: 18px; }
 }
 
 /* Ranking Dasar: Semua kartu biasa ditaruh di urutan ke-10 */
@@ -110,11 +119,22 @@ body {
   background: white; 
   border-radius: 18px; 
   overflow: hidden; 
-  border: 1px solid rgba(31, 81, 255, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 3px 10px rgba(31, 81, 255, 0.05);
   order: 10; 
   display: flex;
   flex-direction: column;
+  transition: 0.25s ease;
 }
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(31, 81, 255, 0.15);
+}
+
+.img-container { overflow: hidden; }
+.img-container img { transition: 0.35s; }
+.card:hover .img-container img { transform: scale(1.05); }
 
 /* RANKING 1: LIMITED (PALING ATAS) */
 .card.limited {
@@ -134,23 +154,44 @@ body {
 }
 
 
-.card-body { padding: 15px; flex-grow: 1; }
-.card-body h4 { font-size: 14px; font-weight: 800; margin: 0; height: 40px; overflow: hidden; }
+.card-body { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; gap: 5px; }
+.card-body h4 { 
+  font-size: 12.5px; 
+  font-weight: 800; 
+  margin: 0; 
+  line-height: 1.35; 
+  white-space: nowrap;
+  overflow: hidden; 
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.card-body h4.expanded {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+}
 
-.status { color: #2ecc71; font-size: 10px; font-weight: 800; background: #ebfaf1; padding: 3px 8px; border-radius: 6px; display: inline-block; margin: 10px 0; }
-.new-price { font-weight: 800; font-size: 18px; display: block; }
-.old-price { text-decoration: line-through; color: #999; font-size: 12px; }
-.discount { color: #ff4757; font-weight: bold; margin-left: 5px; }
+.card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: auto;
+}
+
+.status { color: #2ecc71; font-size: 9px; font-weight: 800; background: #ebfaf1; padding: 2px 7px; border-radius: 6px; display: inline-block; width: fit-content; margin: 0; }
+.price-section { margin: 0; display: flex; flex-direction: column; gap: 1px; }
+.old-price { font-size: 11px; font-weight: 600; color: #9aa1b1; text-decoration: line-through; }
+.new-price { font-weight: 800; font-size: 17px; color: var(--primary); display: block; }
 
 .btn-buy { 
   width: 100%; 
   background: var(--primary); 
   color: white; 
   border: none; 
-  padding: 12px; 
-  border-radius: 12px; 
+  padding: 9px; 
+  border-radius: 10px; 
   font-weight: 800; 
-  margin-top: 10px; 
+  font-size: 12px;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(31, 81, 255, 0.3);
   transition: 0.3s;
@@ -162,21 +203,50 @@ body {
 }
 
 /* Styling Badge/Label */
-.badge {
+.badge-stack {
   position: absolute;
   top: 8px;
   left: 8px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-start;
+}
+
+.badge {
   padding: 4px 8px;
   font-size: 9px;
   font-weight: 800;
   color: white;
   border-radius: 6px;
-  z-index: 10;
   text-transform: uppercase;
 }
 
 .badge-hot { background: #ff4757; box-shadow: 0 0 8px rgba(255, 71, 87, 0.5); }
 .badge-limited { background: #f1c40f; box-shadow: 0 0 8px rgba(241, 196, 15, 0.5); }
+
+/* --- SKELETON LOADING (sebelum produk selesai dirender) --- */
+.skeleton-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 3px 10px rgba(31, 81, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+}
+.skeleton-img { width: 100%; aspect-ratio: 1/1; background: linear-gradient(90deg, #eef1fa 25%, #f7f9ff 37%, #eef1fa 63%); background-size: 400% 100%; animation: skeleton-pulse 1.4s ease infinite; }
+.skeleton-body { padding: 13px; display: flex; flex-direction: column; gap: 8px; }
+.skeleton-line { height: 10px; border-radius: 5px; background: linear-gradient(90deg, #eef1fa 25%, #f7f9ff 37%, #eef1fa 63%); background-size: 400% 100%; animation: skeleton-pulse 1.4s ease infinite; }
+.skeleton-line.w-70 { width: 70%; }
+.skeleton-line.w-40 { width: 40%; }
+.skeleton-line.h-btn { height: 32px; border-radius: 10px; margin-top: 4px; }
+
+@keyframes skeleton-pulse {
+  0% { background-position: 100% 0; }
+  100% { background-position: 0 0; }
+}
 
 /* Styling Search Bar */
 .search-container {
@@ -385,54 +455,100 @@ body {
   margin: 0;
 }
 
-/* Modern refresh */
-.filter-wrapper{gap:12px}
-.filter-btn{border:none;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.06);padding:10px 18px}
-.produk-grid{gap:20px}
-.card{border:none;border-radius:22px;box-shadow:0 10px 28px rgba(0,0,0,.08);transition:.25s}
-.card:hover{transform:translateY(-4px);box-shadow:0 16px 38px rgba(31,81,255,.18)}
-.img-container{overflow:hidden}
-.img-container img{transition:.35s}
-.card:hover .img-container img{transform:scale(1.05)}
-.new-price{font-size:22px;color:#1F51FF;font-weight:800}
-.old-price,.discount{display:none!important}
-
-/* Compact overrides */
-.produk-grid{gap:14px!important}.card-body{padding:10px!important}.card-body h4{font-size:13px!important;min-height:34px;height:auto!important}.status{font-size:9px!important;padding:2px 6px!important;margin:0!important}.new-price{font-size:18px!important}.btn-buy{padding:9px!important;font-size:12px!important}.price-section{margin:0!important}
-
-/* ===== Ultra Compact Product Card v2 ===== */
-.produk-grid{
-  gap:10px !important;
+/* Popup Peraturan */
+.rules-popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(3px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 20px;
 }
 
-.card{
-  border-radius:18px !important;
+.rules-popup-overlay.active {
+  display: flex;
 }
 
-.card-body{
-  padding:8px !important;
-  gap:4px !important;
+.rules-popup {
+  position: relative;
+  background: #fff;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 20px;
+  padding: 28px 22px 24px;
+  text-align: center;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.04), 25px 25px 60px rgba(0,0,0,0.25), -15px -15px 50px rgba(0,0,0,0.12);
+  transform: scale(0.85);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.card-body h4{
-  font-size:12px !important;
-  line-height:1.25 !important;
-  min-height:30px !important;
+.rules-popup-overlay.active .rules-popup {
+  transform: scale(1);
+  opacity: 1;
 }
 
-.status{
-  font-size:8px !important;
-  padding:2px 5px !important;
+.rules-popup h3 {
+  font-size: 17px;
+  font-weight: 800;
+  margin: 6px 0 12px;
+  color: var(--dark, #111);
 }
 
-.new-price{
-  font-size:16px !important;
+.rules-popup p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #555;
+  margin: 0 0 22px;
 }
 
-.btn-buy{
-  padding:8px !important;
-  min-height:34px !important;
-  font-size:11px !important;
-  border-radius:9px !important;
-  margin-top:4px !important;
+.rules-popup-btn {
+  display: block;
+  width: 100%;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 800;
+  font-size: 14px;
+  text-decoration: none;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(31, 81, 255, 0.3);
+}
+
+.rules-popup-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  line-height: 1;
+  color: #999;
+  cursor: pointer;
+  padding: 4px;
+}
+
+body.rules-popup-lock, body.zoom-lock {
+  overflow: hidden;
+}
+
+/* Popup Peraturan lebih besar & lega di layar desktop */
+@media (min-width: 768px) {
+  .rules-popup {
+    max-width: 460px;
+    padding: 38px 34px 32px;
+  }
+  .rules-popup h3 {
+    font-size: 21px;
+  }
+  .rules-popup p {
+    font-size: 15px;
+  }
+  .rules-popup-btn {
+    font-size: 15px;
+    padding: 14px;
+  }
 }

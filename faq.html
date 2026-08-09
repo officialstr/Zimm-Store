@@ -16,11 +16,32 @@
       <img src="img/logo.png" class="logo" alt="Logo">
       <h1 class="brand-title">ZIMM STORE</h1>
     </div>
-    <a href="index.html" style="text-decoration: none; font-weight: 800; color: var(--primary); font-size: 14px;">← Kembali</a>
+
+    <div class="header-right">
+      <div class="menu-wrapper" id="menuWrapper">
+        <div class="kebab-icon" onclick="toggleMenu(event)">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div id="dropdownMenu" class="dropdown-content">
+          <a href="index.html">
+            <span class="icon">↩️</span> Kembali
+          </a>
+          <a href="aturan.html">
+            <span class="icon">📋</span> Peraturan
+          </a>
+          <a href="https://wa.me/6285119516679?">
+            <span class="icon">📞</span> Hubungi Admin
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </header>
 
-<main class="container" style="margin-top: 40px; min-height: 60vh;">
+<main class="container" style="margin-top: 40px;">
   <div class="faq-section">
     <h2 style="margin-bottom: 30px; font-weight: 800; color: var(--dark);">Pertanyaan Sering Diajukan</h2>
 
@@ -79,5 +100,6 @@
   </div>
 </footer>
 
+<script src="script.js"></script>
 </body>
 </html>

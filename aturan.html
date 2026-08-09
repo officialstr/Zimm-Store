@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peraturan - ZIMM STORE</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="aturan.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-flex">
+    <div class="logo-area">
+      <img src="img/logo.png" class="logo" alt="Logo">
+      <h1 class="brand-title">ZIMM STORE</h1>
+    </div>
+
+    <div class="header-right">
+      <div class="menu-wrapper" id="menuWrapper">
+        <div class="kebab-icon" onclick="toggleMenu(event)">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div id="dropdownMenu" class="dropdown-content">
+          <a href="index.html">
+            <span class="icon">↩️</span> Kembali
+          </a>
+          <a href="faq.html">
+            <span class="icon">❓</span> FAQ
+          </a>
+          <a href="https://wa.me/6285119516679?">
+            <span class="icon">📞</span> Hubungi Admin
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="container aturan-main">
+
+  <div class="aturan-heading">
+    <h2>Peraturan Zimm Store</h2>
+    <p>Baca dengan seksama sebelum melakukan pemesanan</p>
+  </div>
+
+  <div class="filter-wrapper">
+    <button class="filter-btn active" onclick="filterAturan('livery', this)">Req Livery</button>
+    <button class="filter-btn" onclick="filterAturan('pembayaran', this)">Pembayaran</button>
+  </div>
+
+  <div class="aturan-card livery">
+    <div class="img-container">
+      <img src="img/aturan/format.jpg" alt="Format Req Livery" class="clickable-img">
+    </div>
+    <div class="aturan-card-body">
+      <h3>Format Req Livery</h3>
+      <p>Biar proses request lebih cepat dan nggak bolak-balik tanya, isi format pesanan sesuai contoh di atas dan jangan lupa kirim referensi livery serta screenshot Multiplayer/Online Game CPM 1.</p>
+    </div>
+  </div>
+
+  <div class="aturan-card livery">
+    <div class="img-container">
+      <img src="img/aturan/booking.jpg" alt="Sistem Booking Req Livery" class="clickable-img">
+    </div>
+    <div class="aturan-card-body">
+      <h3>Sistem Booking Req Livery</h3>
+      <p>Sebelum melakukan booking, pastikan kamu memahami sistem booking yang berlaku di ZIMM STORE. Aturan ini dibuat agar proses antrean berjalan lebih rapi, jelas, dan adil untuk seluruh buyer.</p>
+    </div>
+  </div>
+
+  <div class="aturan-card livery">
+    <div class="img-container">
+      <img src="img/aturan/jadwal.jpg" alt="Jadwal Pembukaan Booking" class="clickable-img">
+    </div>
+    <div class="aturan-card-body">
+      <h3>Jadwal Pembukaan Booking</h3>
+      <p>Setelah slot minggu ini penuh, admin akan mengumumkan tanggal pembukaan booking berikutnya melalui Saluran WhatsApp. Pastikan kamu hanya melakukan booking sesuai tanggal yang telah diumumkan.</p>
+    </div>
+  </div>
+
+  <div class="aturan-card livery">
+    <div class="img-container">
+      <img src="img/aturan/atrean.jpg" alt="Penyesuaian Antrean" class="clickable-img">
+    </div>
+    <div class="aturan-card-body">
+      <h3>Penyesuaian Antrean</h3>
+      <p>Booking sebelum tanggal pembukaan tidak otomatis mendapat antrean lebih depan. Prioritas tetap diberikan kepada buyer yang melakukan booking sesuai jadwal resmi agar sistem antrean tetap adil.</p>
+    </div>
+  </div>
+
+  <div class="aturan-card livery">
+    <div class="img-container">
+      <img src="img/aturan/konsekuensi.jpg" alt="Konsekuensi Pelanggaran" class="clickable-img">
+    </div>
+    <div class="aturan-card-body">
+      <h3>Konsekuensi Pelanggaran</h3>
+      <p>Buyer yang tetap melanggar aturan setelah diperingatkan admin dapat dikenakan tindakan, mulai dari penolakan order hingga blacklist. Hal ini dilakukan demi menjaga keadilan dan kenyamanan seluruh buyer.</p>
+    </div>
+  </div>
+
+  <div class="aturan-card pembayaran">
+    <div class="img-container">
+      <img src="img/aturan/dp.jpg" alt="Sistem DP Dihilangkan" class="clickable-img">
+    </div>
+    <div class="aturan-card-body">
+      <h3>Sistem DP Dihilangkan</h3>
+      <p>Sistem DP (Down Payment) resmi dihilangkan dan tidak dapat digunakan. Pembayaran dilakukan secara penuh untuk mengurangi risiko PHP maupun buyer yang tidak melunasi pembayaran.</p>
+    </div>
+  </div>
+
+  <div class="aturan-card pembayaran">
+    <div class="img-container">
+      <img src="img/aturan/wajib.jpg" alt="Pembayaran Wajib di Awal" class="clickable-img">
+    </div>
+    <div class="aturan-card-body">
+      <h3>Pembayaran Wajib di Awal</h3>
+      <p>Pembayaran harus dilakukan terlebih dahulu sebelum produk yang dibeli diberikan kepada buyer.<br><em>(Ada Uang, Maka Ada Barang.)</em></p>
+    </div>
+  </div>
+
+  <div class="aturan-card pembayaran">
+    <div class="img-container">
+      <img src="img/aturan/customerjual.jpg" alt="Jika Customer Menjual Barang/Jasa kepada ZIMM STORE" class="clickable-img">
+    </div>
+    <div class="aturan-card-body">
+      <h3>Jika Customer Menjual Barang/Jasa kepada ZIMM STORE</h3>
+      <p>Jika terdapat customer/seller yang menjual produk atau jasa kepada ZIMM STORE, maka produk/jasa wajib diberikan terlebih dahulu kepada admin untuk diperiksa atau dikonfirmasi sebelum pembayaran dilakukan.<br><br>Jika transaksi membutuhkan pihak ketiga, dapat menggunakan jasa MC/Rekber terpercaya, dengan biaya fee ditanggung oleh seller/customer.</p>
+    </div>
+  </div>
+
+  <div class="aturan-card pembayaran">
+    <div class="img-container">
+      <img src="img/aturan/pembatalan.jpg" alt="Pembatalan Pesanan & Buyer PHP" class="clickable-img">
+    </div>
+    <div class="aturan-card-body">
+      <h3>Pembatalan Pesanan & Buyer PHP</h3>
+      <p>Buyer dilarang melakukan PHP, menghilang tanpa kabar, maupun memblokir admin setelah melakukan pemesanan.<br>Jika tidak dapat melanjutkan pesanan, wajib menghubungi admin dan membatalkan pesanan dengan jelas.<br><br><em>(Membatalkan pesanan dengan baik lebih baik daripada menghilang.)</em><br><br>Buyer yang tetap melakukan PHP, menghilang, atau memblokir admin setelah diberikan peringatan dapat langsung dikenakan blacklist dari ZIMM STORE. Untuk kasus yang merugikan toko secara serius, ZIMM STORE berhak mengambil tindakan lebih lanjut berdasarkan bukti dan kronologi transaksi.</p>
+    </div>
+  </div>
+
+  <div class="aturan-card livery">
+    <div class="img-container">
+      <img src="img/aturan/penutup.jpg" alt="Penutup" class="clickable-img">
+    </div>
+    <div class="aturan-card-body">
+      <h3>Penutup</h3>
+      <p>Terima kasih telah menghormati sistem booking ZIMM STORE. Dengan mematuhi aturan yang berlaku, kamu turut membantu menciptakan layanan yang adil, nyaman, dan profesional bagi semua buyer.</p>
+    </div>
+  </div>
+
+  <a href="index.html" class="btn-lanjut-pesan">Saya Mengerti, Lanjut Pesan</a>
+
+</main>
+
+<div id="imageOverlay" class="overlay">
+  <img id="zoomedImage" src="" alt="Zoomed">
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -10,6 +10,15 @@
 </head>
 <body>
 
+<div id="rulesPopupOverlay" class="rules-popup-overlay">
+  <div class="rules-popup">
+    <button class="rules-popup-close" onclick="closeRulesPopup()" aria-label="Tutup">&times;</button>
+    <h3>Peraturan Di Zimm Store</h3>
+    <p>Sebelum melakukan pemesanan, yuk luangkan waktu untuk membaca peraturan yang berlaku di Zimm Store.<br><br>Dengan memahami ketentuannya, proses pemesanan dan pengerjaan bisa berjalan lebih lancar.</p>
+    <a href="aturan.html" class="rules-popup-btn">Baca Peraturan</a>
+  </div>
+</div>
+
 <header class="header">
   <div class="container header-flex">
     <div class="logo-area">
@@ -26,6 +35,9 @@
         </div>
         
         <div id="dropdownMenu" class="dropdown-content">
+          <a href="aturan.html">
+            <span class="icon">📋</span> Peraturan
+          </a>
           <a href="faq.html">
             <span class="icon">❓</span> FAQ
           </a>
@@ -42,9 +54,9 @@
 <main class="container">
   <div class="swiper mySwiper">
     <div class="swiper-wrapper">
-      <div class="swiper-slide"><img src="img/img1.jpg" alt="Promo 1"></div>
-      <div class="swiper-slide"><img src="img/img2.jpg" alt="Promo 2"></div>
-      <div class="swiper-slide"><img src="img/img3.jpg" alt="Promo 3"></div>
+      <div class="swiper-slide"><img src="img/img1.jpg" alt="Promo 1" class="clickable-img"></div>
+      <div class="swiper-slide"><img src="img/img2.jpg" alt="Promo 2" class="clickable-img"></div>
+      <div class="swiper-slide"><img src="img/img3.jpg" alt="Promo 3" class="clickable-img"></div>
     </div>
     <div class="swiper-pagination"></div>
   </div>
@@ -60,275 +72,7 @@
 </div>
 
 
-  <div class="produk-grid">
-    <div class="card livery zim">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0011.jpg" alt="Agera Premium" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Agera Premium Body</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 15.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Agera Premium Body', this)">Beli Sekarang</button>
-      </div>
-    </div>
-
-    <div class="card livery zim">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0012.jpg" alt="Hoonicorn" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Ken Block Hoonicorn</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 20.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Ken Block Hoonicorn', this)">Beli Sekarang</button>
-      </div>
-    </div>
-
-    <div class="card livery zim">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0015.jpg" alt="Ford Phoenix" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Ford Phoenix</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 27.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Ford Phoenix', this)">Beli Sekarang</button>
-      </div>
-    </div>
-    
-        <div class="card livery zim sold">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0016.jpg" alt="Toyota GT86 Stance" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Toyota GT86 Stance</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 20.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Toyota GT86 Stance', this)">SOLD OUT</button>
-      </div>
-    </div>
-
-    <div class="card livery zim">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0018.jpg" alt="Skyline R32 Jedi Order" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Skyline R32 Jedi Order</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 25.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Skyline R32 Jedi Order', this)">Beli Sekarang</button>
-      </div>
-    </div>
-
-    <div class="card livery zim sold">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0019.jpg" alt="BMW M8 Racing" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>BMW M8 Racing</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 15.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('BMW M8 Racing', this)">SOLD OUT</button>
-      </div>
-    </div>
-
-    <div class="card livery zim sold">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0021.jpg" alt="BMW NFS" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>BMW NFS (ON POLICE SIRINE)</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 20.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('BMW NFS', this)">SOLD OUT</button>
-      </div>
-    </div>
-
-    <div class="card livery zim">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0023.jpg" alt="Toyota Crown Anime" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Toyota Crown Anime</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 30.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Toyota Crown Anime', this)">Beli Sekarang</button>
-      </div>
-    </div>
-
-    <div class="card livery zim sold">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0024.jpg" alt="R34 Brian's" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Skyline R34 Brian's</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 8.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('R34 Brian\'s', this)">SOLD OUT</button>
-      </div>
-    </div>
-
-    <div class="card livery zim">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0027.jpg" alt="Hilux Diesel Juragan 2GD" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Hilux Diesel Juragan 2GD</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 30.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Hilux Diesel Juragan 2GD', this)">Beli Sekarang</button>
-      </div>
-    </div>
-
-    <div class="card livery zim sold">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0028.jpg" alt="Laferarri Clean Racing" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Laferarri Clean Racing</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 15.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Laferarri Clean Racing', this)">SOLD OUT</button>
-      </div>
-    </div>
-
-    <div class="card livery zim">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0030.jpg" alt="Mercedes-Amg One" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Mercedes-Amg One</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 15.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Mercedes-Amg One', this)">Beli Sekarang</button>
-      </div>
-    </div>
-
-    <div class="card livery zim">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0031.jpg" alt="Bugatti Chiron" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Bugatti Chiron</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 7.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Bugatti Chiron', this)">Beli Sekarang</button>
-      </div>
-    </div>
- 
-    <div class="card livery zim">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0032.jpg" alt="BMW M5 G90" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>BMW M5 G90</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 15.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('BMW M5 G90', this)">Beli Sekarang</button>
-      </div>
-    </div>
-
-    <div class="card livery zim">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0034.jpg" alt="Hilux Diesel Garuda" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Hilux Diesel Garuda</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 30.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Hilux Diesel Garuda', this)">Beli Sekarang</button>
-      </div>
-    </div>
-
-    <div class="card livery zim">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0035.jpg" alt="Nissan Fairlady Nintendo" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Nissan Fairlady Nintendo</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 25.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Nissan Fairlady Nintendo', this)">Beli Sekarang</button>
-      </div>
-    </div>
-
-    <div class="card livery zim sold">
-      <div class="img-container">
-        <img src="img/produk/ZIMM0036.jpg" alt="Hilux Diesel Among Us" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>Hilux Diesel Among Us</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 25.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Hilux Diesel Among Us', this)">SOLD OUT</button>
-      </div>
-    </div>
-
-    <div class="card jasa zim hot-item">
-      <div class="img-container">
-        <span class="badge badge-hot">🔥 Hot Item</span>
-        <img src="img/altr/customlivery.jpg" alt="Custom Design Livery" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>CUSTOM DESIGN LIVERY</h4>
-        <p class="status">⚡ PEMBUATAN CEPAT</p>
-        <div class="price-section">
-          <span class="new-price">Start Rp 7.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="orderCustomDesign('Custom Design Livery', this)">Design Sekarang</button>
-      </div>
-    </div>
-
-    <div class="card livery zim limited">
-      <div class="img-container">
-        <span class="badge badge-limited"> Special Bundle</span>
-        <img src="img/altr/1447H.jpg" alt="Bundle 1447H" class="clickable-img">
-      </div>
-      <div class="card-body">
-        <h4>BUNDLE SPECIAL IDUL ADHA 1447H</h4>
-        <p class="status">⚡ PROSES SATSET</p>
-        <div class="price-section">
-          <span class="new-price">Rp 30.000</span>
-        </div>
-        <button class="btn-buy" data-owner="zim" onclick="order('Bundle 1447H', this)">Beli Sekarang</button>
-      </div>
-    </div>
-  </div>
+  <div class="produk-grid"></div>
 </main>
 
 <div id="imageOverlay" class="overlay">
