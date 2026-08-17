@@ -225,6 +225,10 @@ body {
 
 .badge-hot { background: #ff4757; box-shadow: 0 0 8px rgba(255, 71, 87, 0.5); }
 .badge-limited { background: #f1c40f; box-shadow: 0 0 8px rgba(241, 196, 15, 0.5); }
+.badge-premium {
+  background: linear-gradient(135deg, #2c2c2c 0%, #6b5b2e 50%, #d4af37 100%);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+}
 
 /* --- SKELETON LOADING (sebelum produk selesai dirender) --- */
 .skeleton-card {
