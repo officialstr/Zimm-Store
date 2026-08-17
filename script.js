@@ -6,9 +6,11 @@ const PRODUK = [
   { nama: "CUSTOM DESIGN LIVERY", gambar: "img/altr/customlivery.jpg", hargaLama: "Start Rp 5.000", harga: "Start Rp 7.000", kategori: "jasa", owner: "zim",
     status: "⚡ PEMBUATAN CEPAT", btnText: "Design Sekarang", orderFn: "orderCustomDesign", orderNama: "Custom Design Livery",
     hotItem: true, badge: { text: "🔥 Hot Item", class: "badge-hot" } },
+  { nama: "Jasa Pasang W16", gambar: "img/altr/W16.jpg", hargaLama: "Rp 7.000", harga: "Rp 5.000", kategori: "jarakSekarang", owner: "zim", hotItem: true, badge: { text: "🔥 Hot Item", class: "badge-hot" } },
+  { nama: "MC/Rekber", gambar: "img/altr/MC-REKBER.jpg", hargaLama: "Start Rp 5.000", harga: "Start Rp 3.000", kategori: "Jasa", owner: "zim" },
   { nama: "Agera Premium Bodykit", gambar: "img/produk/ZIMM001.jpg", hargaLama: "Rp 20.000", harga: "Rp 15.000", kategori: "livery", owner: "zim" },
   { nama: "Ken Block Hoonicorn", gambar: "img/produk/ZIMM002.jpg", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
-  { nama: "Ford Phoenix Livery", gambar: "img/produk/ZIMM003.jpg", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
+  { nama: "Ford Phoenix Livery", gambar: "img/produk/ZIMM003.jpg", hargaLama: "Rp 27.000", harga: "Rp 17.000", kategori: "livery", owner: "zim" },
   { nama: "Toyota GT86 Stance", gambar: "img/produk/SOLD001.jpg", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Skyline R32 Jedi Order", gambar: "img/produk/ZIMM004.jpg", hargaLama: "Rp 27.000", harga: "Rp 25.000", kategori: "livery", owner: "zim" },
   { nama: "BMW NFS (ON POLICE SIRINE)", gambar: "img/produk/SOLD002.jpg", hargaLama: "Rp 23.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true, orderNama: "BMW NFS" },
@@ -17,8 +19,8 @@ const PRODUK = [
   { nama: "Mercedes-Amg One", gambar: "img/produk/ZIMM007.jpg", hargaLama: "Rp 15.000", harga: "Rp 10.000", kategori: "livery", owner: "zim" },
   { nama: "GTR R35 Idul Adha", gambar: "img/produk/ZIMM008.jpg", hargaLama: "Rp 30.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
   { nama: "BMW M5 G90", gambar: "img/produk/ZIMM009.jpg", hargaLama: "Rp 15.000", harga: "Rp 10.000", kategori: "livery", owner: "zim" },
-  { nama: "Hilux Diesel Garuda", gambar: "img/produk/ZIMM010.jpg", hargaLama: "Rp 40.000", harga: "Rp 30.000", kategori: "livery", owner: "zim" },
-  { nama: "Nissan Fairlady Nintendo", gambar: "img/produk/ZIMM011.jpg", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
+  { nama: "Hilux Diesel Garuda", gambar: "img/produk/ZIMM010.jpg", hargaLama: "Rp 40.000", harga: "Rp 27.000", kategori: "livery", owner: "zim" },
+  { nama: "Nissan Fairlady Nintendo", gambar: "img/produk/ZIMM011.jpg", hargaLama: "Rp 25.000", harga: "Rp 17.000", kategori: "livery", owner: "zim" },
   { nama: "Hilux Diesel Among Us", gambar: "img/produk/SOLD003.jpg", hargaLama: "Rp 36.000", harga: "Rp 25.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Toyota GT86 Stance V2", gambar: "img/produk/ZIMM012.jpg", hargaLama: "Rp 20.000", harga: "Rp 15.000", kategori: "livery", owner: "zim" },
   { nama: "Old BMW Stance", gambar: "img/produk/ZIMM013.jpg", hargaLama: "Rp 17.000", harga: "Rp 15.000", kategori: "livery", owner: "zim" },
@@ -273,7 +275,53 @@ window.onload = function() {
       terapkanTransform(false);
     });
   }
+  // 8. Confetti Perayaan HUT RI (berlaku di semua halaman: index, faq, aturan)
+  setTimeout(buatConfetti, 1000);
+  setInterval(buatConfetti, 10000);
+
+  // 9. Efek klik merah-putih di kartu produk/layanan & CTA (berlaku di semua halaman)
+  pasangEfekMerdeka('.card');
+  pasangEfekMerdeka('.btn-lanjut-pesan');
 }; // <-- Penutup window.onload sekarang di sini, semua variabel aman.
+
+// ==========================================================
+// CONFETTI MERAH-PUTIH — muncul tiap 7 detik, jatuh pelan
+// ==========================================================
+function buatConfetti() {
+  const jumlah = 60;
+  for (let i = 0; i < jumlah; i++) {
+    const potongan = document.createElement('div');
+    potongan.className = 'confetti-piece';
+    potongan.style.left = Math.random() * 100 + 'vw';
+    potongan.style.background = Math.random() > 0.5 ? '#CE1126' : '#ffffff';
+    const durasi = 2.5 + Math.random() * 1; // jatuh ±3 detik, ada jeda sebelum batch berikutnya
+    potongan.style.animationDuration = durasi + 's';
+    potongan.style.animationDelay = (Math.random() * 0.8) + 's';
+    potongan.style.opacity = (Math.random() * 0.4 + 0.6).toString();
+    potongan.style.transform = `rotate(${Math.random() * 360}deg)`;
+    document.body.appendChild(potongan);
+    setTimeout(() => potongan.remove(), (durasi + 1.5) * 1000);
+  }
+}
+
+// ==========================================================
+// EFEK KLIK MERAH-PUTIH — border beam jalan terus, tapi hanya 1 yang aktif dalam satu waktu
+// ==========================================================
+function pasangEfekMerdeka(selector) {
+  let aktifSebelumnya = null;
+  document.querySelectorAll(selector).forEach(tombol => {
+    tombol.addEventListener('click', () => {
+      // Matikan efek pada produk yang sebelumnya aktif (jika beda dari yang diklik sekarang)
+      if (aktifSebelumnya && aktifSebelumnya !== tombol) {
+        aktifSebelumnya.classList.remove('merdeka-spin');
+      }
+      tombol.classList.remove('merdeka-spin');
+      void tombol.offsetWidth; // paksa reflow biar animasi bisa diulang tiap klik
+      tombol.classList.add('merdeka-spin');
+      aktifSebelumnya = tombol;
+    });
+  });
+}
 
 // 3. Fungsi Order via WhatsApp
 function order(nama, element) {

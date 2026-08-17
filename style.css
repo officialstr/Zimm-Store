@@ -1,7 +1,7 @@
 /* Update Warna Tema ke Biru Neon */
 :root {
-  --primary: #1F51FF; 
-  --bg: #f8f9ff;
+  --primary: #CE1126; 
+  --bg: #fafafa;
   --dark: #1e272e;
 }
 
@@ -15,7 +15,7 @@ body {
 
 .header { 
   background: white; padding: 10px 0; position: sticky; 
-  top: 0; z-index: 100; box-shadow: 0 2px 15px rgba(31, 81, 255, 0.1);
+  top: 0; z-index: 100; box-shadow: 0 2px 15px rgba(206, 17, 38, 0.1);
 }
 .header-flex { display: flex; align-items: center; justify-content: space-between; }
 .logo-area { display: flex; align-items: center; gap: 12px; }
@@ -47,7 +47,7 @@ body {
 .swiper-pagination-bullet-active { 
   background: var(--primary) !important; 
   border-radius: 50% !important;
-  box-shadow: 0 0 8px 3px rgba(31, 81, 255, 0.85);
+  box-shadow: 0 0 8px 3px rgba(206, 17, 38, 0.85);
 }
 
 /* Rasio 1:1 Produk & Zoom */
@@ -120,7 +120,7 @@ body {
   border-radius: 18px; 
   overflow: hidden; 
   border: 1px solid rgba(0, 0, 0, 0.04);
-  box-shadow: 0 3px 10px rgba(31, 81, 255, 0.05);
+  box-shadow: 0 3px 10px rgba(206, 17, 38, 0.05);
   order: 10; 
   display: flex;
   flex-direction: column;
@@ -129,7 +129,7 @@ body {
 
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgba(31, 81, 255, 0.15);
+  box-shadow: 0 10px 24px rgba(206, 17, 38, 0.15);
 }
 
 .img-container { overflow: hidden; }
@@ -193,13 +193,13 @@ body {
   font-weight: 800; 
   font-size: 12px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(31, 81, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(206, 17, 38, 0.3);
   transition: 0.3s;
 }
 
 .btn-buy:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 15px rgba(31, 81, 255, 0.5);
+  box-shadow: 0 6px 15px rgba(206, 17, 38, 0.5);
 }
 
 /* Styling Badge/Label */
@@ -232,7 +232,7 @@ body {
   border-radius: 18px;
   overflow: hidden;
   border: 1px solid rgba(0,0,0,0.04);
-  box-shadow: 0 3px 10px rgba(31, 81, 255, 0.05);
+  box-shadow: 0 3px 10px rgba(206, 17, 38, 0.05);
   display: flex;
   flex-direction: column;
 }
@@ -258,7 +258,7 @@ body {
   width: 100%;
   padding: 12px 20px;
   border-radius: 12px;
-  border: 2px solid rgba(31, 81, 255, 0.1);
+  border: 2px solid rgba(206, 17, 38, 0.1);
   background: white;
   font-family: inherit;
   font-size: 14px;
@@ -268,12 +268,12 @@ body {
 
 #searchInput:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 10px rgba(31, 81, 255, 0.2);
+  box-shadow: 0 0 10px rgba(206, 17, 38, 0.2);
 }
 
-/* --- FOOTER FINAL VERSION (BLUE NEON) --- */
+/* --- FOOTER FINAL VERSION (RED THEME) --- */
 .main-footer {
-  background: var(--primary); /* Biru Neon */
+  background: var(--primary); /* Merah Indonesia */
   padding: 60px 0 30px 0;
   margin-top: 60px;
   text-align: left; /* Rata kiri untuk info */
@@ -370,7 +370,7 @@ body {
 }
 
 .kebab-icon:hover {
-  background: rgba(31, 81, 255, 0.05);
+  background: rgba(206, 17, 38, 0.05);
 }
 
 .kebab-icon span {
@@ -393,7 +393,7 @@ body {
   border-radius: 15px;
   z-index: 1000;
   overflow: hidden;
-  border: 1px solid rgba(31, 81, 255, 0.1);
+  border: 1px solid rgba(206, 17, 38, 0.1);
   animation: fadeIn 0.2s ease-out;
 }
 
@@ -419,7 +419,7 @@ body {
 }
 
 .dropdown-content a:hover {
-  background-color: #f0f4ff;
+  background-color: #fdeef0;
   color: var(--primary);
 }
 
@@ -432,7 +432,7 @@ body {
   padding: 20px;
   border-radius: 18px;
   margin-bottom: 15px;
-  border: 1px solid rgba(31, 81, 255, 0.1);
+  border: 1px solid rgba(206, 17, 38, 0.1);
   transition: 0.3s;
 }
 
@@ -515,7 +515,7 @@ body {
   text-decoration: none;
   padding: 12px;
   border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(31, 81, 255, 0.3);
+  box-shadow: 0 6px 16px rgba(206, 17, 38, 0.3);
 }
 
 .rules-popup-close {
@@ -551,4 +551,104 @@ body.rules-popup-lock, body.zoom-lock {
     font-size: 15px;
     padding: 14px;
   }
+}
+
+/* ==========================================================
+   PERAYAAN HUT RI — Confetti & Efek Klik Merah-Putih
+   ========================================================== */
+
+/* Confetti jatuh pelan */
+.confetti-piece {
+  position: fixed;
+  top: -20px;
+  width: 4px;
+  height: 7px;
+  border-radius: 1px;
+  pointer-events: none;
+  z-index: 9990;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.15);
+  animation-name: confettiJatuh;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes confettiJatuh {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0.85; }
+}
+
+/* Efek klik merah-putih: muter cepat 3x lalu berhenti jadi merah putih */
+.card, .btn-lanjut-pesan {
+  position: relative;
+}
+
+@property --merdeka-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.card.merdeka-spin::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  z-index: 4;
+  pointer-events: none;
+  filter: blur(10px);
+  animation: merdekaAmbientGlow 3s linear infinite;
+}
+
+.card.merdeka-spin::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 3px;
+  z-index: 5;
+  pointer-events: none;
+  background: repeating-conic-gradient(from var(--merdeka-angle),
+    #CE1126 0deg 20deg,
+    #ffffff 20deg 40deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  filter: drop-shadow(0 0 5px rgba(206, 17, 38, 0.85)) drop-shadow(0 0 5px rgba(255, 255, 255, 0.85));
+  animation: merdekaKeliling 3s linear infinite;
+}
+
+.btn-lanjut-pesan.merdeka-spin::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: inherit;
+  z-index: -1;
+  background: conic-gradient(from 0deg,
+    #CE1126 0deg 90deg,
+    #ffffff 90deg 180deg,
+    #CE1126 180deg 270deg,
+    #ffffff 270deg 360deg
+  );
+  filter: drop-shadow(0 0 6px rgba(206, 17, 38, 0.7)) drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+  animation: merdekaMuter 1.7s ease-out forwards;
+}
+
+@keyframes merdekaMuter {
+  0%   { transform: rotate(0deg); opacity: 1; }
+  55%  { transform: rotate(1080deg); opacity: 1; } /* muter cepat 3 putaran penuh */
+  80%  { transform: rotate(1080deg); opacity: 1; } /* berhenti, diam jadi merah-putih */
+  100% { transform: rotate(1080deg); opacity: 0; }  /* baru pudar */
+}
+
+/* Frame produk penuh merah-putih; hanya POLA WARNANYA yang bergeser menyusuri border (bentuk kotak tetap diam, tidak berputar), berulang terus-menerus */
+@keyframes merdekaKeliling {
+  from { --merdeka-angle: 0deg; }
+  to   { --merdeka-angle: 360deg; }
+}
+
+/* Glow tambahan di sekeliling card, warnanya ikut berdenyut merah-putih menyesuaikan border beam */
+@keyframes merdekaAmbientGlow {
+  0%, 100% { box-shadow: 0 0 18px 6px rgba(206, 17, 38, 0.55); }
+  50%      { box-shadow: 0 0 18px 6px rgba(255, 255, 255, 0.55); }
 }

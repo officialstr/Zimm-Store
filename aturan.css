@@ -28,7 +28,7 @@
   border-radius: 18px;
   overflow: hidden;
   margin-bottom: 18px;
-  border: 1px solid rgba(31, 81, 255, 0.08);
+  border: 1px solid rgba(206, 17, 38, 0.08);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
 }
 
@@ -82,5 +82,5 @@
   padding: 15px;
   border-radius: 14px;
   margin-top: 8px;
-  box-shadow: 0 8px 20px rgba(31, 81, 255, 0.3);
+  box-shadow: 0 8px 20px rgba(206, 17, 38, 0.3);
 }
