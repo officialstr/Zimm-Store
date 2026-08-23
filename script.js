@@ -329,7 +329,7 @@ function order(nama, element) {
     return; // Produk sold out, order dibatalkan
   }
   const nomorWA = "6285119516679";
-  const pesan = `*Halo Zimm Store Aku Ingin Memesan Stock Livery*\n*Nama (In-Game):*\n*UID CPM 1:*\n*Pesanan: ${nama}*`;
+  const pesan = `*Halo Zimm Store Aku Ingin Memesan*\n*Nama (In-Game):*\n*UID CPM 1:*\n*Pesanan: ${nama}*`;
 
   window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
 }
