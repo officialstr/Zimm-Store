@@ -56,7 +56,7 @@ const PRODUK = [
   { nama: "Toyota GT86 Stance V2", gambar: "img/produk/ZIMM012.jpg", hargaLama: "Rp 20.000", harga: "Rp 15.000", kategori: "livery", owner: "zim" },
   { nama: "Old BMW Stance", gambar: "img/produk/ZIMM013.jpg", hargaLama: "Rp 17.000", harga: "Rp 15.000", kategori: "livery", owner: "zim" },
   { nama: "Jaspost Subaru G-Shock", gambar: "img/produk/ZIMM014.jpg", hargaLama: "Rp 24.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
-  { nama: "Lexus LFA Rockstar", gambar: "img/produk/ZIMM015.jpg", hargaLama: "Rp 18.000", harga: "Rp 15.000", kategori: "livery", owner: "zim" },
+  { nama: "Lexus LFA Rockstar (JASPOST)", gambar: "img/produk/ZIMM015.jpg", hargaLama: "Rp 18.000", harga: "Rp 15.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Jaspost Mercedes Michelin", gambar: "img/produk/ZIMM016.jpg", hargaLama: "Rp 22.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
   { nama: "Ken Block Hoonicorn V2", gambar: "img/produk/ZIMM017.jpg", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
 { nama: "Porsche 911 Gojo Satoru (Gratis W16)", gambar: "img/produk/ZIMM018.jpg", hargaLama: "Rp 75.000", harga: "Rp 62.000", kategori: "livery", owner: "zim", new: true , galeri: ["img/altr/gratis_w16.jpg"] },
