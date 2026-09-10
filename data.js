@@ -62,6 +62,7 @@ const PRODUK = [
 { nama: "Porsche 911 Gojo Satoru (Gratis W16)", gambar: "img/produk/ZIMM018.jpg", hargaLama: "Rp 75.000", harga: "Rp 62.000", kategori: "livery", owner: "zim", new: true , galeri: ["img/altr/gratis_w16.jpg"] },
 { nama: "Hilux POKERZz 2GD", gambar: "img/produk/ZIMM019.jpg", hargaLama: "Rp 43.000", harga: "Rp 35.000", kategori: "livery", owner: "zim", new: true },
 { nama: "GTR-R35 Paul Walker", gambar: "img/produk/ZIMM020.jpg", hargaLama: "Rp 25.000", harga: "Rp 18.000", kategori: "livery", owner: "zim", new: true },
+{ nama: "GTR-R34 Keizerz", gambar: "img/produk/ZIMM021.jpg", hargaLama: "Rp 22.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", new: true },
 ];
 
 // Kasih tiap produk "id" (slug) otomatis dari namanya, dipakai di URL
