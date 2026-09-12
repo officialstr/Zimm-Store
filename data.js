@@ -48,7 +48,6 @@ const PRODUK = [
   { nama: "Jaspost Toyota Crown Anime", gambar: "img/produk/ZIMM005.jpg", hargaLama: "Rp 34.000", harga: "Rp 25.000", kategori: "livery", owner: "zim" },
   { nama: "Hilux Diesel 2GD", gambar: "img/produk/ZIMM006.jpg", hargaLama: "Rp 35.000", harga: "Rp 30.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Mercedes-Amg One", gambar: "img/produk/ZIMM007.jpg", hargaLama: "Rp 15.000", harga: "Rp 10.000", kategori: "livery", owner: "zim" },
-  { nama: "GTR R35 Idul Adha", gambar: "img/produk/ZIMM008.jpg", hargaLama: "Rp 30.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
   { nama: "BMW M5 G90", gambar: "img/produk/ZIMM009.jpg", hargaLama: "Rp 15.000", harga: "Rp 10.000", kategori: "livery", owner: "zim" },
   { nama: "Hilux Diesel Garuda", gambar: "img/produk/ZIMM010.jpg", hargaLama: "Rp 40.000", harga: "Rp 30.000", kategori: "livery", owner: "zim" },
   { nama: "Nissan Fairlady Nintendo", gambar: "img/produk/ZIMM011.jpg", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
