@@ -32,7 +32,7 @@ function deskripsiDefault(p) {
 
 const PRODUK = [
   { nama: "CUSTOM DESIGN LIVERY", gambar: "img/altr/customlivery.jpg", hargaLama: "Start Rp 5.000", harga: "Start Rp 7.000", kategori: "jasa", owner: "zim",
-    status: "⚡ PEMBUATAN CEPAT", btnText: "Design Sekarang", orderFn: "orderCustomDesign", orderNama: "Custom Design Livery",
+    status: "⚡ PEMBUATAN CEPAT", btnText: "Antrian Penuh", orderFn: "oderCustomDesign", orderNama: "Custom Design Livery",
     hotItem: true, badge: { text: "🔥 Hot Item", class: "badge-hot" },
     deskripsi: `Layanan Custom/Request Livery untuk Car Parking Multiplayer (CPM 1). Kamu bebas menentukan konsep, warna, tema, maupun detail desain sesuai keinginan.<br><br>Pastikan kamu mengirimkan referensi gambar agar hasil desain lebih sesuai dengan yang diinginkan. Livery akan dikerjakan pada mobil sesuai slot/antrian yang kamu dapatkan, sehingga setelah selesai mobil sudah siap digunakan.` },
   { nama: "Jasa Pasang W16", gambar: "img/altr/W16.jpg", hargaLama: "Rp 7.000", harga: "Rp 5.000", kategori: "jasa", owner: "zim", hotItem: true, badge: { text: "🔥 Hot Item", class: "badge-hot" },
