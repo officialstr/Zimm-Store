@@ -32,7 +32,7 @@ function deskripsiDefault(p) {
 
 const PRODUK = [
   { nama: "CUSTOM DESIGN LIVERY", gambar: "img/altr/customlivery.jpg", hargaLama: "Start Rp 5.000", harga: "Start Rp 7.000", kategori: "jasa", owner: "zim",
-    status: "⚡ PEMBUATAN CEPAT", btnText: "Antrian Penuh", orderFn: "oderCustomDesign", orderNama: "Custom Design Livery",
+    status: "⚡ PEMBUATAN CEPAT", btnText: "Antrian Full", orderFn: "oderCustomDesign", orderNama: "Custom Design Livery",
     hotItem: true, badge: { text: "🔥 Hot Item", class: "badge-hot" },
     deskripsi: `Layanan Custom/Request Livery untuk Car Parking Multiplayer (CPM 1). Kamu bebas menentukan konsep, warna, tema, maupun detail desain sesuai keinginan.<br><br>Pastikan kamu mengirimkan referensi gambar agar hasil desain lebih sesuai dengan yang diinginkan. Livery akan dikerjakan pada mobil sesuai slot/antrian yang kamu dapatkan, sehingga setelah selesai mobil sudah siap digunakan.` },
   { nama: "Jasa Pasang W16", gambar: "img/altr/W16.jpg", hargaLama: "Rp 7.000", harga: "Rp 5.000", kategori: "jasa", owner: "zim", hotItem: true, badge: { text: "🔥 Hot Item", class: "badge-hot" },
@@ -41,11 +41,10 @@ const PRODUK = [
     deskripsi: `Jasa MC/Rekber untuk membantu menjaga keamanan transaksi antara penjual dan pembeli. Fee tetap terpotong meskipun transaksi gagal.<br><br>Jika ingin menggunakan jasa MC, tinggal culik admin untuk membantu proses transaksi. Layanan MC hanya tersedia pukul 15.00–21.00 WIB. Di luar jam tersebut, mohon jangan culik admin yaa.` },
   { nama: "Agera Premium Bodykit", gambar: "img/produk/ZIMM001.jpg", hargaLama: "Rp 20.000", harga: "Rp 15.000", kategori: "livery", owner: "zim" },
   { nama: "Ken Block Hoonicorn", gambar: "img/produk/ZIMM002.jpg", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
-  { nama: "Ford Phoenix Livery", gambar: "img/produk/ZIMM003.jpg", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
+  { nama: "Ford Phoenix Livery", gambar: "img/produk/ZIMM003.jpg", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Toyota GT86 Stance", gambar: "img/produk/SOLD001.jpg", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Skyline R32 Jedi Order", gambar: "img/produk/ZIMM004.jpg", hargaLama: "Rp 27.000", harga: "Rp 25.000", kategori: "livery", owner: "zim" },
   { nama: "BMW NFS (ON POLICE SIRINE)", gambar: "img/produk/SOLD002.jpg", hargaLama: "Rp 23.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true, orderNama: "BMW NFS" },
-  { nama: "Jaspost Toyota Crown Anime", gambar: "img/produk/ZIMM005.jpg", hargaLama: "Rp 34.000", harga: "Rp 25.000", kategori: "livery", owner: "zim", sold: true, },
   { nama: "Hilux Diesel 2GD", gambar: "img/produk/ZIMM006.jpg", hargaLama: "Rp 35.000", harga: "Rp 30.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Mercedes-Amg One", gambar: "img/produk/ZIMM007.jpg", hargaLama: "Rp 15.000", harga: "Rp 10.000", kategori: "livery", owner: "zim" },
   { nama: "BMW M5 G90", gambar: "img/produk/ZIMM009.jpg", hargaLama: "Rp 15.000", harga: "Rp 10.000", kategori: "livery", owner: "zim" },
@@ -61,7 +60,6 @@ const PRODUK = [
 { nama: "Porsche 911 Gojo Satoru (Gratis W16)", gambar: "img/produk/ZIMM018.jpg", hargaLama: "Rp 75.000", harga: "Rp 62.000", kategori: "livery", owner: "zim", new: true , galeri: ["img/altr/gratis_w16.jpg"] },
 { nama: "Hilux POKERZz 2GD", gambar: "img/produk/ZIMM019.jpg", hargaLama: "Rp 43.000", harga: "Rp 35.000", kategori: "livery", owner: "zim", new: true },
 { nama: "GTR-R35 Paul Walker", gambar: "img/produk/ZIMM020.jpg", hargaLama: "Rp 25.000", harga: "Rp 18.000", kategori: "livery", owner: "zim", new: true },
-{ nama: "GTR-R34 Keizerz", gambar: "img/produk/ZIMM021.jpg", hargaLama: "Rp 22.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", new: true },
 ];
 
 // Kasih tiap produk "id" (slug) otomatis dari namanya, dipakai di URL
