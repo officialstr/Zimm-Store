@@ -190,7 +190,7 @@ function renderKategori() {
 // ==========================================================
 
 const LABEL_KATEGORI = { livery: "Livery", jasa: "Jasa" };
-const URL_ATURAN = "https://zimmstore.vercel.app/aturan.html";
+const URL_ATURAN = "https://zimmstores.my.id/aturan.html";
 
 function renderProdukDetail() {
   const root = document.getElementById('produkDetailRoot');
