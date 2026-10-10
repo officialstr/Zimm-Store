@@ -31,14 +31,15 @@ function deskripsiDefault(p) {
 }
 
 const PRODUK = [
-  { nama: "CUSTOM DESIGN LIVERY", gambar: "img/altr/customlivery.jpg", hargaLama: "Start Rp 5.000", harga: "Start Rp 7.000", kategori: "jasa", owner: "zim",
-    status: "⚡ PEMBUATAN CEPAT", btnText: "Antrian Full", orderFn: "oderCustomDesign", orderNama: "Custom Design Livery",
+  { nama: "CUSTOM DESIGN LIVERY", pinned: 2, gambar: "img/altr/customlivery.jpg", hargaLama: "Start Rp 5.000", harga: "Start Rp 7.000", kategori: "jasa", game: "cpm1", owner: "zim",
+    status: "⚡ PEMBUATAN CEPAT", orderFn: "orderCustomDesign", orderNama: "Custom Design Livery",
+    closed: true, // true = closed order (tombol "Antrian Full"). Ubah ke false / hapus kalau sudah buka lagi.
     hotItem: true, badge: { text: "🔥 Hot Item", class: "badge-hot" },
-    deskripsi: `Layanan Custom/Request Livery untuk Car Parking Multiplayer (CPM 1). Kamu bebas menentukan konsep, warna, tema, maupun detail desain sesuai keinginan.<br><br>Pastikan kamu mengirimkan referensi gambar agar hasil desain lebih sesuai dengan yang diinginkan. Livery akan dikerjakan pada mobil sesuai slot/antrian yang kamu dapatkan, sehingga setelah selesai mobil sudah siap digunakan.` },
-  { nama: "Jasa Pasang W16", gambar: "img/altr/W16.jpg", hargaLama: "Rp 7.000", harga: "Rp 5.000", kategori: "jasa", owner: "zim", hotItem: true, badge: { text: "🔥 Hot Item", class: "badge-hot" },
-    deskripsi: `Jasa pemasangan mesin W16 untuk Car Parking Multiplayer (CPM 1). Mobil akan dipasangkan mesin W16 sesuai permintaan pada mobil kamu.<br><br>Pastikan mobil kamu mendukung mesin W16 sebelum melakukan pemesanan. Setelah proses pemasangan selesai dalam beberapa menit, mobil akan dikembalikan dengan mesin W16 yang sudah terpasang.` },
-  { nama: "MC/Rekber", gambar: "img/altr/MC-REKBER.jpg", hargaLama: "Start Rp 5.000", harga: "Start Rp 3.000", kategori: "jasa", owner: "zim",
-    deskripsi: `Jasa MC/Rekber untuk membantu menjaga keamanan transaksi antara penjual dan pembeli. Fee tetap terpotong meskipun transaksi gagal.<br><br>Jika ingin menggunakan jasa MC, tinggal culik admin untuk membantu proses transaksi. Layanan MC hanya tersedia pukul 15.00–21.00 WIB. Di luar jam tersebut, mohon jangan culik admin yaa.` },
+    deskripsi: DESK.customDesign },
+  { nama: "Jasa Pasang W16", pinned: 3, gambar: "img/altr/W16.jpg", hargaLama: "Rp 7.000", harga: "Rp 5.000", kategori: "jasa", game: "cpm1", owner: "zim", hotItem: true, badge: { text: "🔥 Hot Item", class: "badge-hot" },
+    deskripsi: DESK.w16 },
+  { nama: "MC/Rekber", pinned: 1, gambar: "img/altr/MC-REKBER.jpg", hargaLama: "Start Rp 5.000", harga: "Start Rp 3.000", kategori: "jasa", owner: "zim", orderFn: "orderMc",
+    deskripsi: DESK.mcRekber },
   { nama: "Ken Block Hoonicorn", gambar: "img/produk/ZIMM002.jpg", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
   { nama: "Ford Phoenix Livery", gambar: "img/produk/ZIMM003.jpg", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Toyota GT86 Stance", gambar: "img/produk/SOLD001.jpg", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true },
@@ -56,8 +57,10 @@ const PRODUK = [
   { nama: "Lexus LFA Rockstar (JASPOST)", gambar: "img/produk/ZIMM015.jpg", hargaLama: "Rp 18.000", harga: "Rp 15.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Jaspost Mercedes Michelin", gambar: "img/produk/ZIMM016.jpg", hargaLama: "Rp 22.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
   { nama: "Ken Block Hoonicorn V2", gambar: "img/produk/ZIMM017.jpg", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
-{ nama: "Porsche 911 Gojo Satoru (Gratis W16)", gambar: "img/produk/ZIMM018.jpg", hargaLama: "Rp 75.000", harga: "Rp 62.000", kategori: "livery", owner: "zim", new: true , galeri: ["img/altr/gratis_w16.jpg"] },
-{ nama: "Hilux POKERZz 2GD", gambar: "img/produk/ZIMM019.jpg", hargaLama: "Rp 43.000", harga: "Rp 35.000", kategori: "livery", owner: "zim", new: true },
+{ nama: "Porsche 911 Gojo Satoru (Gratis W16)", gambar: "img/produk/ZIMM018.jpg", hargaLama: "Rp 75.000", harga: "Rp 62.000", kategori: "livery", owner: "zim" , galeri: ["img/altr/gratis_w16.jpg"] },
+{ nama: "Hilux POKERZz 2GD", gambar: "img/produk/ZIMM019.jpg", hargaLama: "Rp 43.000", harga: "Rp 35.000", kategori: "livery", owner: "zim" },
+{ nama: "STOCK AKUN FF 2#", gambar: "img/produk/FF002.jpg", hargaLama: "Rp 170.000+", harga: "Rp 130.000+", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF002, new: true },
+{ nama: "STOCK AKUN FF 3#", gambar: "img/produk/FF003.jpg", hargaLama: "Rp 210.000+", harga: "Rp 170.000+", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF003, new: true },
 ];
 
 // Kasih tiap produk "id" (slug) otomatis dari namanya, dipakai di URL
@@ -79,4 +82,12 @@ const PRODUK = [
 // Cari 1 produk berdasarkan id (dipakai di produk.html)
 function cariProdukById(id) {
   return PRODUK.find(p => p.id === id);
+}
+
+// Kategori besar toko: "ff" (Free Fire), "cpm1" (CPM 1), "jasa".
+// Produk bisa isi field `game` sendiri (wajib untuk produk Free Fire: game: "ff").
+// Kalau kosong: kategori "livery" -> cpm1, sisanya -> jasa.
+const GAME_LABEL = { ff: "Free Fire", cpm1: "CPM 1", jasa: "Jasa" };
+function gameOf(p) {
+  return p.game || (p.kategori === "livery" ? "cpm1" : "jasa");
 }

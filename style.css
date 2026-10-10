@@ -6,6 +6,11 @@
 }
 
 * { box-sizing: border-box; }
+/* Cegah halaman melebar ke kanan (kalau ada elemen yang keluar layar, HP akan
+   memperlebar halaman sehingga semuanya terlihat bergeser ke kiri). 'clip' dipakai
+   di body supaya navbar sticky tetap jalan. */
+html { overflow-x: hidden; }
+body { overflow-x: clip; }
 body { 
   font-family: 'Plus Jakarta Sans', sans-serif; 
   margin: 0; background: var(--bg); color: var(--dark);
@@ -34,7 +39,24 @@ body {
 .brand-title { font-size: 22px; font-weight: 800; color: #fff; margin: 0; }
 
 /* --- PENGATURAN BANNER RASIO 3:2 --- */
-.mySwiper { width: 100%; padding: 20px 0 40px; }
+/* Swiper dilebarin 15px ke kiri-kanan (nutupin padding container) lalu dikasih padding 15px,
+   jadi ukuran slide tetap sama tapi shadow punya ruang & gak kepotong di pojok */
+.mySwiper { width: calc(100% + 30px); margin: 0 -15px; padding: 20px 0 40px; overflow: hidden; }
+
+/* Slider utama: slide tengah penuh, slide kiri-kanan samar & agak mengecil
+   (samar - terlihat - samar), jaraknya dirapatkan ke slide tengah */
+.mySwiper .swiper-slide {
+  width: min(92%, 960px);
+  height: auto;
+  opacity: 0.4;
+  transform: scale(0.92);
+  transition: opacity .5s ease, transform .5s cubic-bezier(.25, .8, .25, 1);
+  /* Efek "melayang": cahaya dari kanan atas, jadi bayangan jatuh ke kiri-bawah dan agak jauh dari gambar */
+  box-shadow:
+    -18px 28px 28px -14px rgba(0, 0, 0, 0.4),
+    -8px 12px 14px -6px rgba(0, 0, 0, 0.22);
+}
+.mySwiper .swiper-slide.swiper-slide-active { opacity: 1; transform: scale(1); }
 
 .swiper-slide { 
   width: 100%; 
@@ -458,17 +480,19 @@ body {
 }
 
 .kebab-icon {
-  padding: 10px;
+  /* Ukuran dikunci (sama persis dengan ukuran 3 titik) biar tombol gak goyang pas berubah jadi silang */
+  width: 24.5px;
+  height: 40.5px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   gap: 3.5px;
   border-radius: 50%;
   transition: 0.3s;
-}
-
-.kebab-icon:hover {
-  background: rgba(255, 255, 255, 0.1);
+  -webkit-tap-highlight-color: transparent; /* hilangin kilatan abu-abu bawaan browser HP pas ditap */
+  outline: none;
 }
 
 .kebab-icon span {
@@ -477,7 +501,18 @@ body {
   background-color: #fff;
   border-radius: 50%;
   display: block;
+  transition: transform 0.3s ease, opacity 0.2s ease, width 0.3s ease, height 0.3s ease, border-radius 0.3s ease;
 }
+
+/* Pas menu kebuka: 3 titik berubah jadi tanda silang (X) */
+.kebab-icon.active span {
+  width: 20px;
+  height: 2.5px;
+  border-radius: 2px;
+}
+.kebab-icon.active span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.kebab-icon.active span:nth-child(2) { opacity: 0; }
+.kebab-icon.active span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
 /* DROPDOWN BOX */
 .dropdown-content {
@@ -700,3 +735,246 @@ body.zoom-lock {
   transition: opacity 0.3s; z-index: 5000;
 }
 .toast-share.show { opacity: 1; }
+
+
+/* ========================================================== */
+/* BERANDA BARU: slider kategori, strip pinned, halaman kategori */
+/* ========================================================== */
+.kat-wrap { margin: 4px 0 18px; text-align: center; }
+/* Sama kayak slider utama: dilebarin ke tepi layar + padding biar shadow gak kepotong */
+.katSwiper { width: calc(100% + 30px); margin: 0 -15px; padding: 10px 15px 38px; overflow: hidden; }
+.katSwiper .swiper-slide.kat-slide {
+  width: min(68%, 420px);
+  height: auto;
+  aspect-ratio: 4 / 3;
+  position: relative;
+  cursor: pointer;
+  opacity: 0.4;
+  transform: scale(0.86);
+  transition: opacity .3s ease, transform .3s ease;
+  background: linear-gradient(135deg, var(--primary), #0a1f6b);
+  /* Efek "melayang" untuk slider kategori (cahaya dari kanan, bayangan ke kiri-bawah) */
+  box-shadow:
+    -16px 24px 24px -12px rgba(0, 0, 0, 0.4),
+    -7px 10px 12px -5px rgba(0, 0, 0, 0.22);
+}
+.katSwiper .swiper-slide.kat-slide[data-game="ff"] { background: linear-gradient(135deg, #ff7a18, #af002d); }
+.katSwiper .swiper-slide.kat-slide[data-game="jasa"] { background: linear-gradient(135deg, #11998e, #0b4f6c); }
+.katSwiper .swiper-slide.swiper-slide-active { opacity: 1; transform: scale(1); }
+.kat-label {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 26px 12px 10px;
+  color: #fff; font-weight: 800; font-size: 18px; text-align: center;
+  background: linear-gradient(transparent, rgba(0,0,0,.65));
+}
+.btn-lihat-produk {
+  display: inline-block;
+  padding: 12px 34px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 800;
+  font-size: 15px;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(31, 81, 255, .35);
+}
+.btn-lihat-produk:active { transform: scale(.97); }
+
+.pinned-wrap { margin: 6px 0 18px; }
+.pinned-title { font-size: 15px; font-weight: 800; margin: 0 0 10px; color: var(--dark); text-align: center; }
+.pinned-strip { display: flex; gap: 12px; overflow-x: auto; padding: 4px 2px 12px; scroll-snap-type: x proximity; }
+.pinned-strip .card { flex: 0 0 46%; max-width: 210px; scroll-snap-align: start; order: 0 !important; }
+/* Tengahin strip di layar lebar; kalau kebanyakan (HP) tetap bisa digeser */
+.pinned-strip .card:first-child { margin-left: auto; }
+.pinned-strip .card:last-child { margin-right: auto; }
+
+.kategori-judul { font-size: 22px; font-weight: 800; margin: 14px 0 16px; color: var(--dark); }
+.grid-kosong { grid-column: 1 / -1; text-align: center; padding: 30px 10px; color: #666; }
+
+/* ========================================================== */
+/* SILAUAN CAHAYA di pojok kanan atas frame semua slider      */
+/* (searah dengan sumber cahaya shadow: kanan atas)           */
+/* ========================================================== */
+.mySwiper .swiper-slide::before,
+.katSwiper .swiper-slide::before,
+.produkSwiper .swiper-slide::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 65%; height: 65%;
+  z-index: 3;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background:
+    /* inti silau di pojok */
+    radial-gradient(circle at 100% 0%, rgba(255,255,255,.95) 0, rgba(255,255,255,.45) 7%, rgba(255,255,255,0) 38%),
+    /* sapuan cahaya diagonal tipis */
+    linear-gradient(225deg, rgba(255,255,255,.30) 0, rgba(255,255,255,.08) 22%, rgba(255,255,255,0) 45%),
+    /* pantulan lensa kecil */
+    radial-gradient(circle at 78% 22%, rgba(255,255,255,.35) 0, rgba(255,255,255,0) 9%);
+  animation: glareBerkedip 4s ease-in-out infinite;
+}
+@keyframes glareBerkedip {
+  0%, 100% { opacity: .7; }
+  50%      { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mySwiper .swiper-slide::before,
+  .katSwiper .swiper-slide::before,
+  .produkSwiper .swiper-slide::before { animation: none; }
+}
+
+
+/* ========================================================== */
+/* TOMBOL MENGAMBANG: WhatsApp "Hubungi Admin" + kembali ke atas */
+/* ========================================================== */
+.wa-float {
+  position: fixed;
+  right: 14px;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: #25D366;
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  text-decoration: none;
+  box-shadow: 0 6px 16px rgba(37, 211, 102, .45);
+}
+.wa-float svg { width: 20px; height: 20px; flex-shrink: 0; }
+.wa-float:active { transform: scale(.96); }
+
+.btn-top {
+  position: fixed;
+  left: 50%;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  z-index: 90;
+  width: 40px; height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 16px rgba(31, 81, 255, .4);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.btn-top svg { width: 20px; height: 20px; }
+.btn-top.show { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+.btn-top:active { transform: translate(-50%, 0) scale(.94); }
+
+/* Sembunyikan saat zoom gambar terbuka; toast share dinaikkan biar tidak ketutup tombol */
+body.zoom-lock .wa-float, body.zoom-lock .btn-top { display: none; }
+.toast-share { bottom: 80px !important; }
+
+
+/* ========================================================== */
+/* ANIMASI KARTU PRODUK (muncul saat pertama terlihat di layar) */
+/* ========================================================== */
+@keyframes kartuMasuk {
+  from { opacity: 0; transform: translateY(18px) scale(.98); }
+  to   { opacity: 1; transform: none; }
+}
+.card.reveal { opacity: 0; }
+.card.reveal-in { animation: kartuMasuk .5s cubic-bezier(.2, .7, .2, 1) both; animation-delay: var(--d, 0ms); }
+
+/* Bagian "Sudah Terjual" di bawah beranda */
+.sold-wrap { margin: 30px 0 10px; }
+
+/* ========================================================== */
+/* TOMBOL MODE GELAP di navbar */
+/* ========================================================== */
+.theme-toggle {
+  width: 36px; height: 36px;
+  margin-right: 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.theme-toggle svg { width: 20px; height: 20px; }
+.theme-toggle:active { background: rgba(255, 255, 255, .12); }
+
+/* ========================================================== */
+/* MODE GELAP */
+/* ========================================================== */
+html[data-theme="dark"] {
+  --bg: #0d111c;
+  --dark: #e6e9f2;
+  --surface: #161c2b;
+  --teks-biru: #7f9bff; /* biru lebih terang supaya terbaca di latar gelap */
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .skeleton-card,
+html[data-theme="dark"] .faq-card,
+html[data-theme="dark"] .produk-detail-deskripsi,
+html[data-theme="dark"] .btn-aturan,
+html[data-theme="dark"] .btn-share,
+html[data-theme="dark"] .filter-btn:not(.active),
+html[data-theme="dark"] .aturan-card,
+html[data-theme="dark"] #searchInput {
+  background: var(--surface);
+  border-color: rgba(255, 255, 255, .08);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .35);
+}
+html[data-theme="dark"] #searchInput { color: var(--dark); border: 2px solid rgba(127, 155, 255, .22); }
+html[data-theme="dark"] #searchInput::placeholder { color: #8b93a7; }
+html[data-theme="dark"] #searchInput:focus { border-color: var(--primary); }
+
+html[data-theme="dark"] .btn-detail { background: transparent; color: var(--teks-biru); border-color: rgba(127, 155, 255, .35); }
+html[data-theme="dark"] .btn-detail:hover { background: var(--primary); color: #fff; }
+html[data-theme="dark"] .card.sold .btn-detail { color: #777; border-color: #333; }
+
+html[data-theme="dark"] .new-price,
+html[data-theme="dark"] .faq-question,
+html[data-theme="dark"] .produk-detail-deskripsi h3,
+html[data-theme="dark"] .back-link,
+html[data-theme="dark"] .filter-btn:not(.active) { color: var(--teks-biru); }
+
+html[data-theme="dark"] .faq-answer,
+html[data-theme="dark"] .produk-detail-deskripsi,
+html[data-theme="dark"] .grid-kosong,
+html[data-theme="dark"] .aturan-card-body { color: #c3c9d9; }
+
+html[data-theme="dark"] .status,
+html[data-theme="dark"] .produk-detail-status { background: rgba(46, 204, 113, .15); }
+
+html[data-theme="dark"] .skeleton-img,
+html[data-theme="dark"] .skeleton-line {
+  background: linear-gradient(90deg, #1b2234 25%, #252e45 37%, #1b2234 63%);
+  background-size: 400% 100%;
+}
+
+html[data-theme="dark"] .btn-aturan:hover,
+html[data-theme="dark"] .btn-share:hover { color: var(--teks-biru); border-color: var(--primary); }
+html[data-theme="dark"] .toast-share { background: #e6e9f2; color: #0d111c; }
+
+/* Mode gelap: titik indikator slider utama jadi putih transparan
+   (bukan biru) supaya tidak cuma cahaya biru yang terlihat */
+html[data-theme="dark"] .mySwiper .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, .35);
+  opacity: 1;
+}
+html[data-theme="dark"] .mySwiper .swiper-pagination-bullet-active {
+  background: rgba(255, 255, 255, .85) !important;
+  box-shadow: 0 0 8px 3px rgba(255, 255, 255, .3);
+}
+
+/* Mode gelap: teks penjelasan di halaman Peraturan lebih terang */
+html[data-theme="dark"] .aturan-card-body p,
+html[data-theme="dark"] .aturan-card-body li,
+html[data-theme="dark"] .aturan-card-body,
+html[data-theme="dark"] .aturan-heading p { color: #f1f4fb !important; }

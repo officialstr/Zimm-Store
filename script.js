@@ -2,26 +2,21 @@
 // ada di data.js supaya bisa dipakai bareng sama produk.html. Pastikan
 // data.js sudah di-include di index.html SEBELUM script.js ini.
 
-// Fungsi render otomatis: mengubah data PRODUK (dari data.js) jadi card HTML
-function renderProduk() {
-  const grid = document.getElementById('produkGrid');
-  if (!grid) return;
+// Satu kartu produk (dipakai grid beranda, strip pinned, dan halaman kategori)
+function kartuHtml(p) {
+  const kelas = ["card", p.kategori, p.owner];
+  if (p.sold) kelas.push("sold");
+  if (p.hotItem) kelas.push("hot-item");
+  if (p.limited) kelas.push("limited");
+  if (p.new) kelas.push("new");
 
-  grid.innerHTML = PRODUK.map(p => {
-    const kelas = ["card", p.kategori, p.owner];
-    if (p.sold) kelas.push("sold");
-    if (p.hotItem) kelas.push("hot-item");
-    if (p.limited) kelas.push("limited");
-    if (p.new) kelas.push("new");
+  const badges = [];
+  if (p.badge) badges.push(`<span class="badge ${p.badge.class}">${p.badge.text}</span>`);
+  if (p.limited && !p.badge) badges.push(`<span class="badge badge-limited">⭐ Limited</span>`);
+  if (p.new) badges.push(`<span class="badge badge-new">NEW</span>`);
+  const badgeHtml = badges.length ? `<div class="badge-stack">${badges.join('')}</div>` : "";
 
-    // Kumpulin semua badge yang aktif (hot + limited + new bisa nyala bareng, disusun vertikal)
-    const badges = [];
-    if (p.badge) badges.push(`<span class="badge ${p.badge.class}">${p.badge.text}</span>`);
-    if (p.limited && !p.badge) badges.push(`<span class="badge badge-limited">⭐ Limited</span>`);
-    if (p.new) badges.push(`<span class="badge badge-new">NEW</span>`);
-    const badgeHtml = badges.length ? `<div class="badge-stack">${badges.join('')}</div>` : "";
-
-    return `
+  return `
     <div class="${kelas.join(' ')}">
       <a class="img-container" href="produk.html?id=${encodeURIComponent(p.id)}">
         ${badgeHtml}
@@ -37,7 +32,157 @@ function renderProduk() {
         </div>
       </div>
     </div>`;
-  }).join('');
+}
+
+function isiGrid(list, pesanKosong) {
+  const grid = document.getElementById('produkGrid');
+  if (!grid) return;
+  grid.innerHTML = list.length
+    ? list.map(kartuHtml).join('')
+    : `<p class="grid-kosong">${pesanKosong || 'Produk tidak ditemukan.'}</p>`;
+  animasiKartu(grid);
+}
+
+// Animasi kartu: muncul pelan (naik + memudar masuk) sekali saja saat pertama
+// terlihat di layar. Mati otomatis kalau HP memakai mode "kurangi animasi".
+function animasiKartu(root) {
+  if (!('IntersectionObserver' in window)) return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const kartu = (root || document).querySelectorAll('.card:not(.reveal-done)');
+  if (!kartu.length) return;
+
+  if (!animasiKartu.io) {
+    animasiKartu.io = new IntersectionObserver(entries => {
+      let urutan = 0;
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        const el = en.target;
+        animasiKartu.io.unobserve(el);
+        el.style.setProperty('--d', Math.min(urutan++, 8) * 60 + 'ms'); // muncul bergelombang
+        el.classList.add('reveal-in');
+        el.addEventListener('animationend', e => {
+          if (e.target !== el) return;
+          el.classList.remove('reveal', 'reveal-in'); // balik normal supaya efek hover tetap jalan
+          el.style.removeProperty('--d');
+        }, { once: true });
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+  }
+  kartu.forEach(el => {
+    el.classList.add('reveal', 'reveal-done');
+    animasiKartu.io.observe(el);
+  });
+}
+
+// ==========================================================
+// BERANDA (index.html): strip jasa pinned + 30 produk random
+// ==========================================================
+const JUMLAH_RANDOM = 30;
+
+// Urutan random disimpan per sesi, jadi pas balik dari halaman detail
+// (tombol Back) produknya tidak teracak ulang.
+function ambilRandomBeranda() {
+  try {
+    const ids = JSON.parse(sessionStorage.getItem('zimmRandom') || 'null');
+    if (ids) {
+      const list = ids.map(cariProdukById).filter(Boolean);
+      if (list.length) return list;
+    }
+  } catch (e) {}
+  const pool = PRODUK.filter(p => !p.pinned && !p.sold);
+  const list = acakArray(pool).slice(0, JUMLAH_RANDOM);
+  try { sessionStorage.setItem('zimmRandom', JSON.stringify(list.map(p => p.id))); } catch (e) {}
+  return list;
+}
+
+// 5 produk sold acak di paling bawah beranda ("Sudah Terjual").
+// Urutannya juga disimpan per sesi, sama seperti produk random di atas.
+const JUMLAH_SOLD = 5;
+function ambilSoldBeranda() {
+  try {
+    const ids = JSON.parse(sessionStorage.getItem('zimmSold') || 'null');
+    if (ids) {
+      const list = ids.map(cariProdukById).filter(p => p && p.sold);
+      if (list.length) return list;
+    }
+  } catch (e) {}
+  const list = acakArray(PRODUK.filter(p => p.sold && !p.pinned)).slice(0, JUMLAH_SOLD);
+  try { sessionStorage.setItem('zimmSold', JSON.stringify(list.map(p => p.id))); } catch (e) {}
+  return list;
+}
+
+function renderSold() {
+  const wrap = document.getElementById('soldWrap');
+  const grid = document.getElementById('soldGrid');
+  if (!wrap || !grid) return;
+  const list = ambilSoldBeranda();
+  if (!list.length) { wrap.style.display = 'none'; return; }
+  grid.innerHTML = list.map(kartuHtml).join('');
+  wrap.style.display = '';
+  animasiKartu(grid);
+}
+
+function renderBeranda() {
+  const strip = document.getElementById('pinnedStrip');
+  if (!strip) return; // bukan halaman beranda
+  strip.innerHTML = PRODUK.filter(p => p.pinned)
+    .sort((x, y) => x.pinned - y.pinned)
+    .map(kartuHtml).join('');
+  animasiKartu(strip);
+  isiGrid(ambilRandomBeranda());
+  renderSold();
+}
+
+// Slider kategori (Free Fire - CPM 1 - Jasa): geser / tap slide samar = pindah
+// ke tengah. Tap slide tengah atau tombol "Lihat Produk" = buka halaman kategori.
+function initSliderKategori() {
+  const el = document.querySelector('.katSwiper');
+  const tombol = document.getElementById('btnLihatProduk');
+  if (!el || !tombol || typeof Swiper === 'undefined') return;
+
+  const update = s => { tombol.href = `kategori.html?game=${s.slides[s.activeIndex].dataset.game}`; };
+
+  new Swiper(el, {
+    slidesPerView: 'auto',
+    centeredSlides: true,
+    spaceBetween: 12,
+    loop: true,
+    speed: 350,
+    on: {
+      init: update,
+      slideChange: update,
+      tap(s) {
+        const sl = s.clickedSlide;
+        if (!sl) return;
+        if (sl === s.slides[s.activeIndex]) {
+          window.location.href = `kategori.html?game=${sl.dataset.game}`;
+        } else {
+          s.slideTo(Array.from(s.slides).indexOf(sl));
+        }
+      }
+    }
+  });
+}
+
+// ==========================================================
+// HALAMAN KATEGORI (kategori.html): semua produk sesuai kategori
+// ==========================================================
+function renderKategori() {
+  const judul = document.getElementById('kategoriJudul');
+  if (!judul) return; // bukan halaman kategori
+  const game = new URLSearchParams(window.location.search).get('game');
+
+  if (!GAME_LABEL[game]) {
+    judul.textContent = 'Kategori Tidak Ditemukan';
+    isiGrid([], 'Kategori yang kamu cari tidak ada.');
+    return;
+  }
+  judul.textContent = GAME_LABEL[game];
+  document.title = `${GAME_LABEL[game]} - ZIMM STORE`;
+  isiGrid(
+    PRODUK.filter(p => gameOf(p) === game),
+    'Produk segera hadir. Hubungi admin untuk info lebih lanjut.'
+  );
 }
 
 // ==========================================================
@@ -83,11 +228,14 @@ function renderProdukDetail() {
   const oldPriceHtml = p.hargaLama ? `<span class="old-price">${p.hargaLama}</span>` : "";
   const deskripsi = p.deskripsi || deskripsiDefault(p);
 
-  const orderFn = p.orderFn || "order";
+  // Jasa otomatis pakai orderJasa, livery pakai order
+  const orderFn = p.orderFn || (p.kategori === "jasa" ? "orderJasa" : "order");
   const orderNama = (p.orderNama || p.nama).replace(/'/g, "\\'");
-  const btnOrderText = p.btnText || (p.sold ? "SOLD OUT" : "Order Sekarang");
-  const btnOrderHtml = p.sold
-    ? `<button class="btn-order sold-btn" disabled>${btnOrderText}</button>`
+  const btnOrderText = p.sold ? "SOLD OUT"
+    : p.closed ? "Antrian Full"
+    : (p.btnText || "Order Sekarang");
+  const btnOrderHtml = (p.sold || p.closed)
+    ? `<button class="btn-order ${p.sold ? 'sold-btn' : 'closed-btn'}" disabled>${btnOrderText}</button>`
     : `<button class="btn-order" onclick="${orderFn}('${orderNama}', this)">${btnOrderText}</button>`;
 
   root.innerHTML = `
@@ -151,7 +299,7 @@ function renderProdukRelated(produkSekarang) {
   if (!wrap || !grid) return;
 
   const kandidat = PRODUK.filter(p =>
-    p.kategori === produkSekarang.kategori &&
+    gameOf(p) === gameOf(produkSekarang) &&
     p.id !== produkSekarang.id &&
     !p.sold
   );
@@ -178,6 +326,7 @@ function renderProdukRelated(produkSekarang) {
   }).join('');
 
   wrap.style.display = "";
+  animasiKartu(grid);
 }
 
 // Fungsi Share: pakai Web Share API kalau didukung (HP), fallback copy link
@@ -218,29 +367,69 @@ function renderSkeleton(jumlah = 6) {
 renderSkeleton();
 
 window.onload = function() {
+  let swiperUtama = null; // slider utama (dipakai juga buat tap slide samar)
+
   // -1. Render produk dari data PRODUK di atas (harus paling awal,
   // biar fitur zoom & filter di bawah ini kebagian elemen yang baru dibuat)
-  renderProduk();
+  renderBeranda();
+  renderKategori();
+  initSliderKategori();
 
   // -1b. Kalau ini halaman produk.html, render detail produknya
   renderProdukDetail();
 
   // 1. Inisialisasi Swiper Slider
   if (typeof Swiper !== 'undefined') {
-    const swiper = new Swiper(".mySwiper", {
-      slidesPerView: 1, 
-      spaceBetween: 20,
+    const wrapperUtama = document.querySelector('.mySwiper .swiper-wrapper');
+    const dotsUtama = document.querySelector('.mySwiper .swiper-pagination');
+    const slideAsli = Array.from(wrapperUtama.children);
+    const jumlahAsli = slideAsli.length;
+
+    // Swiper mode loop + slidesPerView:'auto' butuh slide yang cukup banyak
+    // (kalau cuma 3 loop-nya rusak). Jadi slide digandakan sampai minimal 6,
+    // sama seperti slider kategori. Salinan ditandai .slide-klon supaya
+    // tidak ikut dihitung di zoom ("1 dari 3").
+    while (wrapperUtama.children.length < 6 && jumlahAsli > 1) {
+      slideAsli.forEach(s => {
+        const c = s.cloneNode(true);
+        c.classList.add('slide-klon');
+        wrapperUtama.appendChild(c);
+      });
+    }
+
+    const totalSlide = wrapperUtama.children.length; // sudah termasuk salinan, belum termasuk duplikat internal Swiper
+
+    swiperUtama = new Swiper(".mySwiper", {
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      spaceBetween: -6,         // rapat ke slide tengah (negatif = makin menempel)
       loop: true,
-      loopPreventsSliding: false, 
+      speed: 600,
       autoplay: {
         delay: 4000,
         disableOnInteraction: false,
       },
-      pagination: {
-        el: ".swiper-pagination",
-        clickable: true,
-      },
     });
+
+    // Titik pagination dibuat manual: tetap sebanyak slide asli (3), bukan 6
+    if (dotsUtama) {
+      // Kelas bawaan Swiper yang memosisikan titik di tengah bawah (biasanya ditambah
+      // otomatis oleh modul pagination, tapi sekarang titiknya dibuat manual)
+      dotsUtama.classList.add('swiper-pagination-bullets', 'swiper-pagination-horizontal');
+      dotsUtama.innerHTML = slideAsli.map(() => '<span class="swiper-pagination-bullet"></span>').join('');
+      const dots = Array.from(dotsUtama.children);
+      const updateDots = () => {
+        const aktif = swiperUtama.realIndex % jumlahAsli;
+        dots.forEach((d, i) => d.classList.toggle('swiper-pagination-bullet-active', i === aktif));
+      };
+      swiperUtama.on('slideChange', updateDots);
+      updateDots();
+      dots.forEach((d, i) => d.addEventListener('click', () => {
+        let selisih = ((i - swiperUtama.realIndex) % jumlahAsli + jumlahAsli) % jumlahAsli;
+        if (selisih > jumlahAsli / 2) selisih -= jumlahAsli;
+        swiperUtama.slideToLoop((swiperUtama.realIndex + selisih + totalSlide) % totalSlide);
+      }));
+    }
   }
 
   // 2. Fitur Zoom Gambar (Lightbox) ala Facebook — full screen, tombol X,
@@ -350,7 +539,7 @@ window.onload = function() {
     function ambilGrupGambar(img) {
       const container = img.closest('.swiper') || img.parentElement;
       if (!container) return [img.src];
-      const slides = container.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate) .clickable-img');
+      const slides = container.querySelectorAll('.swiper-slide:not(.swiper-slide-duplicate):not(.slide-klon) .clickable-img');
       const imgs = slides.length ? Array.from(slides) : Array.from(container.querySelectorAll('.clickable-img'));
       return imgs.length ? imgs.map(i => i.src) : [img.src];
     }
@@ -490,6 +679,12 @@ window.onload = function() {
     // Buka zoom saat gambar (produk/slider/apapun) diklik
     clickableImgs.forEach(img => {
       img.addEventListener('click', () => {
+        // Tap slide samar di slider utama = geser ke tengah dulu, bukan buka zoom
+        const slideEl = img.closest('.mySwiper .swiper-slide');
+        if (slideEl && swiperUtama && !slideEl.classList.contains('swiper-slide-active')) {
+          swiperUtama.slideTo(Array.from(swiperUtama.slides).indexOf(slideEl));
+          return;
+        }
         const group = ambilGrupGambar(img);
         const idx = group.indexOf(img.src);
         bukaZoom(group, idx === -1 ? 0 : idx);
@@ -686,6 +881,31 @@ function orderCustomDesign(nama, element) {
   window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
 }
 
+// 3c. Order untuk jasa umum (MC/Rekber, Jasa W16, dll)
+function orderJasa(nama, element) {
+  const nomorWA = "6285119516679";
+  const pesan = `*Halo Zimm Store Aku Ingin Memesan ${nama}*\n*Nama (In-Game):*\n*UID CPM 1:*`;
+
+  window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
+}
+
+// 3d. Order khusus MC/Rekber
+function orderMc(nama, element) {
+  const nomorWA = "6285119516679";
+  const pesan = [
+    "*Halo ZimmStore Aku Ingin Pakai Jasa MC/Rekber*",
+    "",
+    "_*BACA PERATURAN‼️:*_",
+    "✅️ Pastikan tunggu admin merespon (bukan bot yang merespon) sebelum diculik ke grup.",
+    "✅️ Jasa open pada 15.00-21.00 WIB.",
+    "✅️ Pastikan barang legal.",
+    "✅️ Terdapat FEE (Biaya Admin) dalam jasa ini.",
+    "✅️ FEE Tetap terpotong saat transaksi gagal."
+  ].join("\n");
+
+  window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
+}
+
 // 4. Fungsi Filter Kategori Produk
 function filterProduk(kategori, element) {
   // Update tampilan tombol aktif
@@ -702,31 +922,30 @@ function filterProduk(kategori, element) {
   });
 }
 
-// 5. Fungsi Search Produk
+// 5. Fungsi Search Produk (cari di semua produk, bukan cuma yang tampil)
 function searchProduk() {
-  const input = document.getElementById('searchInput');
-  const filter = input.value.toLowerCase();
-  const grid = document.querySelector('.produk-grid');
-  const cards = grid.getElementsByClassName('card');
-
-  for (let i = 0; i < cards.length; i++) {
-    // Ambil teks dari tag h4 di dalam card body
-    const title = cards[i].querySelector('.card-body h4');
-    const textValue = title.textContent || title.innerText;
-
-    if (textValue.toLowerCase().indexOf(filter) > -1) {
-      cards[i].style.display = ""; // Munculin kalau cocok
-    } else {
-      cards[i].style.display = "none"; // Sembunyiin kalau gak cocok
-    }
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const pinnedWrap = document.getElementById('pinnedWrap');
+  const soldWrap = document.getElementById('soldWrap');
+  if (!q) {
+    if (pinnedWrap) pinnedWrap.style.display = "";
+    isiGrid(ambilRandomBeranda());
+    renderSold();
+    return;
   }
+  if (pinnedWrap) pinnedWrap.style.display = "none";
+  if (soldWrap) soldWrap.style.display = "none"; // hasil pencarian sudah memuat produk sold juga
+  isiGrid(PRODUK.filter(p => p.nama.toLowerCase().includes(q)));
 }
 
 // 6. Fungsi Dropdown Menu Titik Tiga
 function toggleMenu(event) {
     event.stopPropagation(); // Biar gak ketutup pas diklik
     const menu = document.getElementById("dropdownMenu");
-    menu.classList.toggle("show-menu");
+    const icon = document.querySelector(".kebab-icon");
+    const terbuka = menu.classList.toggle("show-menu");
+    // Titik tiga berubah jadi silang pas menu kebuka, balik lagi pas ketutup
+    if (icon) icon.classList.toggle("active", terbuka);
 }
 
 // Menutup menu otomatis jika klik di luar area
@@ -735,6 +954,8 @@ window.addEventListener('click', function(event) {
     if (menu && menu.classList.contains('show-menu')) {
         if (!event.target.closest('.menu-wrapper')) {
             menu.classList.remove('show-menu');
+            const icon = document.querySelector(".kebab-icon");
+            if (icon) icon.classList.remove("active");
         }
     }
 });
@@ -748,3 +969,67 @@ function filterAturan(kategori, element) {
     card.style.display = card.classList.contains(kategori) ? 'block' : 'none';
   });
 }
+
+// 8. Tombol mengambang: "Hubungi Admin" (WhatsApp) di kanan bawah
+//    + tombol kembali ke atas di tengah bawah (muncul setelah scroll)
+function initTombolMengambang() {
+  const nomorWA = "6285119516679";
+  const pesan = "Halo Zimm Store, aku mau tanya";
+
+  const wa = document.createElement('a');
+  wa.className = 'wa-float';
+  wa.href = `https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`;
+  wa.target = '_blank';
+  wa.rel = 'noopener';
+  wa.setAttribute('aria-label', 'Hubungi Admin lewat WhatsApp');
+  wa.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span>Hubungi Admin</span>`;
+  document.body.appendChild(wa);
+
+  const atas = document.createElement('button');
+  atas.type = 'button';
+  atas.className = 'btn-top';
+  atas.setAttribute('aria-label', 'Kembali ke atas');
+  atas.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 15 12 9 18 15"/></svg>`;
+  atas.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  document.body.appendChild(atas);
+
+  const cek = () => atas.classList.toggle('show', window.scrollY > 400);
+  window.addEventListener('scroll', cek, { passive: true });
+  cek();
+}
+initTombolMengambang();
+
+
+// 9. Mode gelap: tombol bulan/matahari di navbar (kiri titik tiga).
+//    Pilihan disimpan; kalau belum pernah memilih, ikut pengaturan HP.
+//    (tema awal dipasang oleh script kecil di <head> tiap halaman)
+function initTema() {
+  const kanan = document.querySelector('.header-right');
+  if (!kanan) return;
+  const root = document.documentElement;
+
+  const BULAN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  const MATAHARI = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'theme-toggle';
+
+  const gelap = () => root.getAttribute('data-theme') === 'dark';
+  const tampil = () => {
+    btn.innerHTML = gelap() ? MATAHARI : BULAN;
+    btn.setAttribute('aria-label', gelap() ? 'Ganti ke mode terang' : 'Ganti ke mode gelap');
+  };
+
+  btn.addEventListener('click', () => {
+    if (gelap()) root.removeAttribute('data-theme'); else root.setAttribute('data-theme', 'dark');
+    try { localStorage.setItem('zimmTema', gelap() ? 'dark' : 'light'); } catch (e) {}
+    tampil();
+  });
+
+  tampil();
+  kanan.insertBefore(btn, kanan.firstChild);
+}
+initTema();
