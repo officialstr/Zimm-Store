@@ -39,7 +39,6 @@ const PRODUK = [
     deskripsi: `Jasa pemasangan mesin W16 untuk Car Parking Multiplayer (CPM 1). Mobil akan dipasangkan mesin W16 sesuai permintaan pada mobil kamu.<br><br>Pastikan mobil kamu mendukung mesin W16 sebelum melakukan pemesanan. Setelah proses pemasangan selesai dalam beberapa menit, mobil akan dikembalikan dengan mesin W16 yang sudah terpasang.` },
   { nama: "MC/Rekber", gambar: "img/altr/MC-REKBER.jpg", hargaLama: "Start Rp 5.000", harga: "Start Rp 3.000", kategori: "jasa", owner: "zim",
     deskripsi: `Jasa MC/Rekber untuk membantu menjaga keamanan transaksi antara penjual dan pembeli. Fee tetap terpotong meskipun transaksi gagal.<br><br>Jika ingin menggunakan jasa MC, tinggal culik admin untuk membantu proses transaksi. Layanan MC hanya tersedia pukul 15.00–21.00 WIB. Di luar jam tersebut, mohon jangan culik admin yaa.` },
-  { nama: "Agera Premium Bodykit", gambar: "img/produk/ZIMM001.jpg", hargaLama: "Rp 20.000", harga: "Rp 15.000", kategori: "livery", owner: "zim" },
   { nama: "Ken Block Hoonicorn", gambar: "img/produk/ZIMM002.jpg", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
   { nama: "Ford Phoenix Livery", gambar: "img/produk/ZIMM003.jpg", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Toyota GT86 Stance", gambar: "img/produk/SOLD001.jpg", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true },
@@ -47,7 +46,7 @@ const PRODUK = [
   { nama: "BMW NFS (ON POLICE SIRINE)", gambar: "img/produk/SOLD002.jpg", hargaLama: "Rp 23.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true, orderNama: "BMW NFS" },
   { nama: "Hilux Diesel 2GD", gambar: "img/produk/ZIMM006.jpg", hargaLama: "Rp 35.000", harga: "Rp 30.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Mercedes-Amg One", gambar: "img/produk/ZIMM007.jpg", hargaLama: "Rp 15.000", harga: "Rp 10.000", kategori: "livery", owner: "zim" },
-  { nama: "BMW M5 G90", gambar: "img/produk/ZIMM009.jpg", hargaLama: "Rp 15.000", harga: "Rp 10.000", kategori: "livery", owner: "zim" },
+  { nama: "BMW M5 G90", gambar: "img/produk/ZIMM009.jpg", hargaLama: "Rp 15.000", harga: "Rp 10.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Hilux Diesel Garuda", gambar: "img/produk/ZIMM010.jpg", hargaLama: "Rp 40.000", harga: "Rp 30.000", kategori: "livery", owner: "zim" },
   { nama: "Nissan Fairlady Nintendo", gambar: "img/produk/ZIMM011.jpg", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
   { nama: "Hilux Diesel Among Us", gambar: "img/produk/SOLD003.jpg", hargaLama: "Rp 36.000", harga: "Rp 25.000", kategori: "livery", owner: "zim", sold: true },
@@ -59,7 +58,6 @@ const PRODUK = [
   { nama: "Ken Block Hoonicorn V2", gambar: "img/produk/ZIMM017.jpg", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
 { nama: "Porsche 911 Gojo Satoru (Gratis W16)", gambar: "img/produk/ZIMM018.jpg", hargaLama: "Rp 75.000", harga: "Rp 62.000", kategori: "livery", owner: "zim", new: true , galeri: ["img/altr/gratis_w16.jpg"] },
 { nama: "Hilux POKERZz 2GD", gambar: "img/produk/ZIMM019.jpg", hargaLama: "Rp 43.000", harga: "Rp 35.000", kategori: "livery", owner: "zim", new: true },
-{ nama: "GTR-R35 Paul Walker", gambar: "img/produk/ZIMM020.jpg", hargaLama: "Rp 25.000", harga: "Rp 18.000", kategori: "livery", owner: "zim", new: true, sold: true },
 ];
 
 // Kasih tiap produk "id" (slug) otomatis dari namanya, dipakai di URL
