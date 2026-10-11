@@ -382,7 +382,8 @@ window.onload = function() {
   renderProdukDetail();
 
   // 1. Inisialisasi Swiper Slider
-  if (typeof Swiper !== 'undefined') {
+  // Slider utama cuma ada di beranda; di halaman lain (produk, kategori, dll) dilewati
+  if (typeof Swiper !== 'undefined' && document.querySelector('.mySwiper .swiper-wrapper')) {
     const wrapperUtama = document.querySelector('.mySwiper .swiper-wrapper');
     const dotsUtama = document.querySelector('.mySwiper .swiper-pagination');
     const slideAsli = Array.from(wrapperUtama.children);
