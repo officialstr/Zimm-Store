@@ -228,15 +228,18 @@ function renderProdukDetail() {
   const oldPriceHtml = p.hargaLama ? `<span class="old-price">${p.hargaLama}</span>` : "";
   const deskripsi = p.deskripsi || deskripsiDefault(p);
 
-  // Jasa otomatis pakai orderJasa, livery pakai order
-  const orderFn = p.orderFn || (p.kategori === "jasa" ? "orderJasa" : "order");
+  // Jasa otomatis pakai orderJasa, stock akun FF pakai orderAkunFF, livery pakai order
+  const akunFF = p.kategori === "akun" && gameOf(p) === "ff";
+  const orderFn = p.orderFn || (p.kategori === "jasa" ? "orderJasa" : akunFF ? "orderAkunFF" : "order");
+  // ID produk = nama file gambar tanpa folder & ekstensi (contoh: img/produk/FF003.jpg -> FF003)
+  const idProduk = (p.gambar || "").split("/").pop().replace(/\.[^.]+$/, "");
   const orderNama = (p.orderNama || p.nama).replace(/'/g, "\\'");
   const btnOrderText = p.sold ? "SOLD OUT"
     : p.closed ? "Antrian Full"
     : (p.btnText || "Order Sekarang");
   const btnOrderHtml = (p.sold || p.closed)
     ? `<button class="btn-order ${p.sold ? 'sold-btn' : 'closed-btn'}" disabled>${btnOrderText}</button>`
-    : `<button class="btn-order" onclick="${orderFn}('${orderNama}', this)">${btnOrderText}</button>`;
+    : `<button class="btn-order" onclick="${orderFn}('${orderNama}', this, '${idProduk}')">${btnOrderText}</button>`;
 
   root.innerHTML = `
     <div class="produk-galeri ${fotoList.length <= 1 ? 'satu-foto' : ''}">
@@ -866,6 +869,22 @@ function order(nama, element) {
   }
   const nomorWA = "6285119516679";
   const pesan = `*Halo Zimm Store Aku Ingin Memesan Stock Livery*\n*Nama (In-Game):*\n*UID CPM 1:*\n*Pesanan: ${nama}*`;
+
+  window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
+}
+
+// 3a. Order khusus Stock Akun Free Fire
+function orderAkunFF(nama, element, idProduk) {
+  if (element && element.closest('.card.sold')) {
+    return; // Produk sold out, order dibatalkan
+  }
+  const nomorWA = "6285119516679";
+  const pesan = [
+    "*Halo ZimmStore aku ingin memesan ff*",
+    `*Pesanan:* ${nama}`,
+    `*ID Produk:* ${idProduk}`,
+    "*Payment: QRIS All Payment*"
+  ].join("\n");
 
   window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
 }

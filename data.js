@@ -61,6 +61,7 @@ const PRODUK = [
 { nama: "Hilux POKERZz 2GD", gambar: "img/produk/ZIMM019.jpg", hargaLama: "Rp 43.000", harga: "Rp 35.000", kategori: "livery", owner: "zim" },
 { nama: "STOCK AKUN FF 2#", gambar: "img/produk/FF002.jpg", hargaLama: "Rp 170.000+", harga: "Rp 130.000+", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF002, new: true },
 { nama: "STOCK AKUN FF 3#", gambar: "img/produk/FF003.jpg", hargaLama: "Rp 210.000+", harga: "Rp 170.000+", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF003, sold: true },
+{ nama: "STOCK AKUN FF 4#", gambar: "img/produk/FF004.jpg", hargaLama: "Rp 230.000+", harga: "Rp 200.000+", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF004, new: true },
 ];
 
 // Kasih tiap produk "id" (slug) otomatis dari namanya, dipakai di URL
