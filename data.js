@@ -60,7 +60,7 @@ const PRODUK = [
 { nama: "Porsche 911 Gojo Satoru (Gratis W16)", gambar: "img/produk/ZIMM018.jpg", hargaLama: "Rp 75.000", harga: "Rp 62.000", kategori: "livery", owner: "zim" , galeri: ["img/altr/gratis_w16.jpg"] },
 { nama: "Hilux POKERZz 2GD", gambar: "img/produk/ZIMM019.jpg", hargaLama: "Rp 43.000", harga: "Rp 35.000", kategori: "livery", owner: "zim" },
 { nama: "STOCK AKUN FF 2#", gambar: "img/produk/FF002.jpg", hargaLama: "Rp 170.000+", harga: "Rp 130.000+", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF002, new: true },
-{ nama: "STOCK AKUN FF 3#", gambar: "img/produk/FF003.jpg", hargaLama: "Rp 210.000+", harga: "Rp 170.000+", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF003, new: true },
+{ nama: "STOCK AKUN FF 3#", gambar: "img/produk/FF003.jpg", hargaLama: "Rp 210.000+", harga: "Rp 170.000+", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF003, sold: true },
 ];
 
 // Kasih tiap produk "id" (slug) otomatis dari namanya, dipakai di URL
