@@ -7,7 +7,7 @@ const DESK = {
 
   w16: `Jasa pemasangan mesin W16 untuk Car Parking Multiplayer (CPM 1). Mobil akan dipasangkan mesin W16 sesuai permintaan pada mobil kamu.<br><br>Pastikan mobil kamu mendukung mesin W16 sebelum melakukan pemesanan. Setelah proses pemasangan selesai dalam beberapa menit, mobil akan dikembalikan dengan mesin W16 yang sudah terpasang.`,
 
-  FF002: `STOCK AKUN FF 2#<br><br>LOGIN GOOGLE<br>BIND ON<br><br>SG LUMUT, GURUN, MAMBA, BUNNY ON<br>VAULT 130<br>SKYWING ON<br>EMOT BEKU ON 2<br>INCU ON<br>RAMBUT KAKASHI PUTIH ON<br>BUNDLE MINATO ON<br><br>Op? 130+ EX.. MINAT? PM MIMIN ( ZIMMSTORE ) +62 851-1951-6679 ATAU KLIK ORDER`,
+  FF002: `STOCK AKUN FF 2#<br><br>LOGIN GOOGLE<br>BIND ON<br><br>SG LUMUT, GURUN, MAMBA, BUNNY ON<br>VAULT 130<br>SKYWING ON<br>EMOTE BEKU ON 2<br>EMOTE SQUAD<br>INCU ON<br>RAMBUT KAKASHI PUTIH ON<br>BUNDLE MINATO ON<br><br>Op? 150+ EX.. MINAT? PM MIMIN ( ZIMMSTORE ) +62 851-1951-6679 ATAU KLIK ORDER`,
 
   FF003: `STOCK RECEH AKUN FF 3#<br><br>LOGIN GOOGLE<br>BIND ON<br><br>SG LUMUT, 2JT LVL 5, MAMBA ON<br>EVO 2 LVL 5<br>VAULT 110<br>TINJU ON 2<br>KATANA ON<br>EMOTE LARI ON 3<br>ANGEL UNGU, MERAH, PUTIH, GENJI V2 ON<br>RAMBUT KAKASHI HITAM & PINK ON<br>BUNDLE DARK MATTER, YUJI, BOOYAH PASS, INCU, DAN ARTCTIC BLUE ON<br><br>Op? 170+ EX.. MINAT? PM MIMIN ( ZIMMSTORE ) +62 851-1951-6679 ATAU KLIK ORDER`,
 
