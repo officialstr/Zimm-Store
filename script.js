@@ -2,6 +2,14 @@
 // ada di data.js supaya bisa dipakai bareng sama produk.html. Pastikan
 // data.js sudah di-include di index.html SEBELUM script.js ini.
 
+// Nomor WhatsApp admin (dipakai semua fungsi order & tombol mengambang). Ganti nomor di sini saja.
+const nomorWA = "6285119516679";
+
+// Aman untuk dipakai di dalam atribut HTML (nama produk yang memuat tanda kutip tidak merusak tag)
+function esc(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+}
+
 // Satu kartu produk (dipakai grid beranda, strip pinned, dan halaman kategori)
 function kartuHtml(p) {
   const kelas = ["card", p.kategori, p.owner];
@@ -20,7 +28,7 @@ function kartuHtml(p) {
     <div class="${kelas.join(' ')}">
       <a class="img-container" href="produk.html?id=${encodeURIComponent(p.id)}">
         ${badgeHtml}
-        <img src="${p.gambar}" alt="${p.nama}">
+        <img src="${p.gambar}" alt="${esc(p.nama)}" loading="lazy" decoding="async">
       </a>
       <div class="card-body">
         <div class="title-wrap"><h4 onclick="this.classList.toggle('expanded')">${p.nama}</h4></div>
@@ -85,7 +93,7 @@ function ambilRandomBeranda() {
   try {
     const ids = JSON.parse(sessionStorage.getItem('zimmRandom') || 'null');
     if (ids) {
-      const list = ids.map(cariProdukById).filter(Boolean);
+      const list = ids.map(cariProdukById).filter(p => p && !p.sold && !p.pinned);
       if (list.length) return list;
     }
   } catch (e) {}
@@ -213,8 +221,8 @@ function renderProdukDetail() {
 
   // Kumpulkan foto: gambar utama + galeri tambahan (kalau ada)
   const fotoList = [p.gambar, ...(p.galeri || [])];
-  const slidesHtml = fotoList.map(src => `
-    <div class="swiper-slide${p.sold ? ' sold-slide' : ''}"><img src="${src}" alt="${p.nama}"${p.sold ? '' : ' class="clickable-img"'}></div>
+  const slidesHtml = fotoList.map((src, i) => `
+    <div class="swiper-slide${p.sold ? ' sold-slide' : ''}"><img src="${src}" alt="${esc(p.nama)}"${i === 0 ? ' fetchpriority="high"' : ' loading="lazy"'}${p.sold ? '' : ' class="clickable-img"'}></div>
   `).join('');
 
   const kategoriBadge = LABEL_KATEGORI[p.kategori]
@@ -314,7 +322,7 @@ function renderProdukRelated(produkSekarang) {
     return `
     <div class="card ${p.kategori} ${p.owner}">
       <a class="img-container" href="produk.html?id=${encodeURIComponent(p.id)}">
-        <img src="${p.gambar}" alt="${p.nama}">
+        <img src="${p.gambar}" alt="${esc(p.nama)}" loading="lazy" decoding="async">
       </a>
       <div class="card-body">
         <div class="title-wrap"><h4>${p.nama}</h4></div>
@@ -339,6 +347,7 @@ function shareProduk(namaProduk) {
     navigator.share({ title: `${namaProduk} - ZIMM STORE`, url }).catch(() => {});
     return;
   }
+  if (!navigator.clipboard) return;
   navigator.clipboard.writeText(url).then(() => {
     const toast = document.getElementById('toastShare');
     if (!toast) return;
@@ -365,11 +374,12 @@ function renderSkeleton(jumlah = 6) {
 }
 
 // Tampilkan skeleton dulu begitu script ini dieksekusi (DOM .produk-grid
-// sudah ada di HTML pada titik ini), biar tidak blank sambil nunggu
-// window.onload (yang baru jalan setelah SEMUA gambar selesai dimuat).
+// sudah ada di HTML pada titik ini), biar tidak blank sebelum produk dirender.
 renderSkeleton();
 
-window.onload = function() {
+// Dijalankan begitu HTML siap (DOMContentLoaded), BUKAN window.onload: onload baru jalan
+// setelah SEMUA gambar selesai diunduh, jadi produk & slider baru muncul belakangan.
+function mulaiHalaman() {
   let swiperUtama = null; // slider utama (dipakai juga buat tap slide samar)
 
   // -1. Render produk dari data PRODUK di atas (harus paling awal,
@@ -861,14 +871,19 @@ window.onload = function() {
       if (e.key === 'ArrowLeft') pindahGambar('right');
     });
   }
-}; // <-- Penutup window.onload sekarang di sini, semua variabel aman.
+} // <-- Penutup mulaiHalaman sekarang di sini, semua variabel aman.
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', mulaiHalaman);
+} else {
+  mulaiHalaman();
+}
 
 // 3. Fungsi Order via WhatsApp
 function order(nama, element) {
   if (element && element.closest('.card.sold')) {
     return; // Produk sold out, order dibatalkan
   }
-  const nomorWA = "6285119516679";
   const pesan = `*Halo Zimm Store Aku Ingin Memesan Stock Livery*\n*Nama (In-Game):*\n*UID CPM 1:*\n*Pesanan: ${nama}*`;
 
   window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
@@ -879,7 +894,6 @@ function orderAkunFF(nama, element, idProduk) {
   if (element && element.closest('.card.sold')) {
     return; // Produk sold out, order dibatalkan
   }
-  const nomorWA = "6285119516679";
   const pesan = [
     "*Halo ZimmStore aku ingin memesan ff*",
     `*Pesanan:* ${nama}`,
@@ -895,7 +909,6 @@ function orderCustomDesign(nama, element) {
   if (element && element.closest('.card.sold')) {
     return; // Produk sold out, order dibatalkan
   }
-  const nomorWA = "6285119516679";
   const pesan = `*Halo Zimm Store Aku Ingin Membuat Design Livery*\n*Nama (In-game):*\n*UID CPM 1:*\n*Pesanan: ${nama}*\n\n*Berikan Contoh/Referensi Desain Livery Yang Diinginkan Serta Kirimkan Juga Screenshot Pada Bagian Multiplayer CPM 1`;
 
   window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
@@ -903,7 +916,6 @@ function orderCustomDesign(nama, element) {
 
 // 3c. Order untuk jasa umum (MC/Rekber, Jasa W16, dll)
 function orderJasa(nama, element) {
-  const nomorWA = "6285119516679";
   const pesan = `*Halo Zimm Store Aku Ingin Memesan ${nama}*\n*Nama (In-Game):*\n*UID CPM 1:*`;
 
   window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
@@ -911,7 +923,6 @@ function orderJasa(nama, element) {
 
 // 3d. Order khusus MC/Rekber
 function orderMc(nama, element) {
-  const nomorWA = "6285119516679";
   const pesan = [
     "*Halo ZimmStore Aku Ingin Pakai Jasa MC/Rekber*",
     "",
@@ -924,22 +935,6 @@ function orderMc(nama, element) {
   ].join("\n");
 
   window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
-}
-
-// 4. Fungsi Filter Kategori Produk
-function filterProduk(kategori, element) {
-  // Update tampilan tombol aktif
-  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-  element.classList.add('active');
-
-  // Filter kartu produk
-  document.querySelectorAll('.card').forEach(card => {
-    if (kategori === 'all' || card.classList.contains(kategori)) {
-      card.style.display = ""; // Kembalikan ke display flex bawaan CSS
-    } else {
-      card.style.display = 'none';
-    }
-  });
 }
 
 // 5. Fungsi Search Produk (cari di semua produk, bukan cuma yang tampil)
@@ -993,7 +988,6 @@ function filterAturan(kategori, element) {
 // 8. Tombol mengambang: "Hubungi Admin" (WhatsApp) di kanan bawah
 //    + tombol kembali ke atas di tengah bawah (muncul setelah scroll)
 function initTombolMengambang() {
-  const nomorWA = "6285119516679";
   const pesan = "Halo Zimm Store, aku mau tanya";
 
   const wa = document.createElement('a');
