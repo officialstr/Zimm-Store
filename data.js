@@ -62,7 +62,7 @@ const PRODUK = [
 { nama: "STOCK AKUN FF 2#", gambar: "img/ff/FF002.webp", hargaLama: "Rp 160.000", harga: "Rp 150.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF002, new: true, galeri: ["img/ff/FF002-2.webp", "img/ff/FF002-3.webp"] },
 { nama: "STOCK AKUN FF 3#", gambar: "img/produk/FF003.webp", hargaLama: "Rp 190.000", harga: "Rp 170.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF003, sold: true },
 { nama: "STOCK AKUN FF 4#", gambar: "img/ff/FF004.webp", hargaLama: "Rp 230.000", harga: "Rp 200.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF004, new: true, galeri: ["img/ff/FF004-2.webp", "img/ff/FF004-3.webp"] },
-{ nama: "STOCK AKUN FF 5#", gambar: "img/ff/FF005.webp", hargaLama: "Rp 130.000", harga: "Rp 115.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF005, new: true, galeri: ["img/ff/FF005-2.webp", "img/ff/FF005-3.webp", "img/ff/FF005-4.webp"] },
+{ nama: "STOCK AKUN FF 5#", gambar: "img/ff/FF005.webp", hargaLama: "Rp 130.000", harga: "Rp 115.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF005, new: true, galeri: ["img/ff/FF005-2.webp", "img/ff/FF005-3.webp", "img/ff/FF005-4.webp"], sold: true },
 ];
 
 // Kasih tiap produk "id" (slug) otomatis dari namanya, dipakai di URL
