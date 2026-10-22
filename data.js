@@ -59,9 +59,9 @@ const PRODUK = [
   { nama: "Ken Block Hoonicorn V2", gambar: "img/produk/ZIMM017.webp", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
 { nama: "Porsche 911 Gojo Satoru (Gratis W16)", gambar: "img/produk/ZIMM018.webp", hargaLama: "Rp 75.000", harga: "Rp 62.000", kategori: "livery", owner: "zim" , galeri: ["img/altr/gratis_w16.webp"] },
 { nama: "Hilux POKERZz 2GD", gambar: "img/produk/ZIMM019.webp", hargaLama: "Rp 43.000", harga: "Rp 35.000", kategori: "livery", owner: "zim" },
-{ nama: "STOCK AKUN FF 2#", gambar: "img/ff/FF002.webp", hargaLama: "Rp 160.000", harga: "Rp 150.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF002, new: true, galeri: ["img/ff/FF002-2.webp", "img/ff/FF002-3.webp"] },
+{ nama: "STOCK AKUN FF 2#", gambar: "img/ff/FF002.webp", hargaLama: "Rp 160.000", harga: "Rp 150.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF002, new: true, galeri: ["img/ff/FF002-2.webp", "img/ff/FF002-3.webp", "img/ff/FF002-4.webp"] },
 { nama: "STOCK AKUN FF 3#", gambar: "img/produk/FF003.webp", hargaLama: "Rp 190.000", harga: "Rp 170.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF003, sold: true },
-{ nama: "STOCK AKUN FF 4#", gambar: "img/ff/FF004.webp", hargaLama: "Rp 230.000", harga: "Rp 200.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF004, new: true, galeri: ["img/ff/FF004-2.webp", "img/ff/FF004-3.webp"] },
+{ nama: "STOCK AKUN FF 4#", gambar: "img/ff/FF004.webp", hargaLama: "Rp 200.000", harga: "Rp 185.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF004, new: true, galeri: ["img/ff/FF004-2.webp", "img/ff/FF004-3.webp", "img/ff/FF004-4.webp", "img/ff/FF004-5.webp"] },
 { nama: "STOCK AKUN FF 5#", gambar: "img/ff/FF005.webp", hargaLama: "Rp 130.000", harga: "Rp 115.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF005, new: true, galeri: ["img/ff/FF005-2.webp", "img/ff/FF005-3.webp", "img/ff/FF005-4.webp"], sold: true },
 ];
 
