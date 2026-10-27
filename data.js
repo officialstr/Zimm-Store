@@ -46,7 +46,6 @@ const PRODUK = [
   { nama: "Skyline R32 Jedi Order", gambar: "img/produk/ZIMM004.webp", hargaLama: "Rp 27.000", harga: "Rp 25.000", kategori: "livery", owner: "zim" },
   { nama: "BMW NFS (ON POLICE SIRINE)", gambar: "img/produk/SOLD002.webp", hargaLama: "Rp 23.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true, orderNama: "BMW NFS" },
   { nama: "Hilux Diesel 2GD", gambar: "img/produk/ZIMM006.webp", hargaLama: "Rp 35.000", harga: "Rp 30.000", kategori: "livery", owner: "zim", sold: true },
-  { nama: "Mercedes-Amg One", gambar: "img/produk/ZIMM007.webp", hargaLama: "Rp 15.000", harga: "Rp 10.000", kategori: "livery", owner: "zim" },
   { nama: "BMW M5 G90", gambar: "img/produk/ZIMM009.webp", hargaLama: "Rp 15.000", harga: "Rp 10.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Hilux Diesel Garuda", gambar: "img/produk/ZIMM010.webp", hargaLama: "Rp 40.000", harga: "Rp 30.000", kategori: "livery", owner: "zim" },
   { nama: "Nissan Fairlady Nintendo", gambar: "img/produk/ZIMM011.webp", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
@@ -54,15 +53,14 @@ const PRODUK = [
   { nama: "Toyota GT86 Stance V2", gambar: "img/produk/ZIMM012.webp", hargaLama: "Rp 20.000", harga: "Rp 15.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Old BMW Stance", gambar: "img/produk/ZIMM013.webp", hargaLama: "Rp 17.000", harga: "Rp 15.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Subaru G-Shock", gambar: "img/produk/ZIMM014.webp", hargaLama: "Rp 24.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true },
-  { nama: "Lexus LFA Rockstar (JASPOST)", gambar: "img/produk/ZIMM015.webp", hargaLama: "Rp 18.000", harga: "Rp 15.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Ken Block Hoonicorn V2", gambar: "img/produk/ZIMM017.webp", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
 { nama: "Porsche 911 Gojo Satoru (Gratis W16)", gambar: "img/produk/ZIMM018.webp", hargaLama: "Rp 75.000", harga: "Rp 62.000", kategori: "livery", owner: "zim" , galeri: ["img/altr/gratis_w16.webp"] },
-{ nama: "Hilux POKERZz 2GD", gambar: "img/produk/ZIMM019.webp", hargaLama: "Rp 43.000", harga: "Rp 35.000", kategori: "livery", owner: "zim" },
+{ nama: "Hilux POKERZz 2GD", gambar: "img/produk/ZIMM019.webp", hargaLama: "Rp 43.000", harga: "Rp 35.000", kategori: "livery", owner: "zim", sold: true },
 { nama: "STOCK AKUN FF 2#", gambar: "img/ff/FF002.webp", hargaLama: "Rp 160.000", harga: "Rp 150.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF002, new: true, galeri: ["img/ff/FF002-2.webp", "img/ff/FF002-3.webp", "img/ff/FF002-4.webp"] },
 { nama: "STOCK AKUN FF 3#", gambar: "img/produk/FF003.webp", hargaLama: "Rp 190.000", harga: "Rp 170.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF003, sold: true },
 { nama: "STOCK AKUN FF 4#", gambar: "img/ff/FF004.webp", hargaLama: "Rp 200.000", harga: "Rp 185.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF004, new: true, galeri: ["img/ff/FF004-2.webp", "img/ff/FF004-3.webp", "img/ff/FF004-4.webp", "img/ff/FF004-5.webp"] },
 { nama: "STOCK AKUN FF 5#", gambar: "img/ff/FF005.webp", hargaLama: "Rp 130.000", harga: "Rp 115.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF005, new: true, galeri: ["img/ff/FF005-2.webp", "img/ff/FF005-3.webp", "img/ff/FF005-4.webp"], sold: true },
-{ nama: "STOCK AKUN FF 6#", gambar: "img/ff/FF006.webp", hargaLama: "Rp 115.000", harga: "Rp 100.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF006, new: true, galeri: ["img/ff/FF006-2.webp", "img/ff/FF006-3.webp", "img/ff/FF006-4.webp"], sold: false },
+{ nama: "STOCK AKUN FF 6#", gambar: "img/ff/FF006.webp", hargaLama: "Rp 115.000", harga: "Rp 100.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF006, new: true, galeri: ["img/ff/FF006-2.webp", "img/ff/FF006-3.webp", "img/ff/FF006-4.webp"], sold: true },
 ];
 
 // Kasih tiap produk "id" (slug) otomatis dari namanya, dipakai di URL
