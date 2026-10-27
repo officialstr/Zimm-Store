@@ -51,7 +51,7 @@ const PRODUK = [
   { nama: "Hilux Diesel Garuda", gambar: "img/produk/ZIMM010.webp", hargaLama: "Rp 40.000", harga: "Rp 30.000", kategori: "livery", owner: "zim" },
   { nama: "Nissan Fairlady Nintendo", gambar: "img/produk/ZIMM011.webp", hargaLama: "Rp 25.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
   { nama: "Hilux Diesel Among Us", gambar: "img/produk/SOLD003.webp", hargaLama: "Rp 36.000", harga: "Rp 25.000", kategori: "livery", owner: "zim", sold: true },
-  { nama: "Toyota GT86 Stance V2", gambar: "img/produk/ZIMM012.webp", hargaLama: "Rp 20.000", harga: "Rp 15.000", kategori: "livery", owner: "zim" },
+  { nama: "Toyota GT86 Stance V2", gambar: "img/produk/ZIMM012.webp", hargaLama: "Rp 20.000", harga: "Rp 15.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Old BMW Stance", gambar: "img/produk/ZIMM013.webp", hargaLama: "Rp 17.000", harga: "Rp 15.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Subaru G-Shock", gambar: "img/produk/ZIMM014.webp", hargaLama: "Rp 24.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Lexus LFA Rockstar (JASPOST)", gambar: "img/produk/ZIMM015.webp", hargaLama: "Rp 18.000", harga: "Rp 15.000", kategori: "livery", owner: "zim", sold: true },
