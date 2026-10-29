@@ -53,7 +53,7 @@ const PRODUK = [
   { nama: "Toyota GT86 Stance V2", gambar: "img/produk/ZIMM012.webp", hargaLama: "Rp 20.000", harga: "Rp 15.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Old BMW Stance", gambar: "img/produk/ZIMM013.webp", hargaLama: "Rp 17.000", harga: "Rp 15.000", kategori: "livery", owner: "zim", sold: true },
   { nama: "Subaru G-Shock", gambar: "img/produk/ZIMM014.webp", hargaLama: "Rp 24.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true },
-  { nama: "Ken Block Hoonicorn V2", gambar: "img/produk/ZIMM017.webp", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim" },
+  { nama: "Ken Block Hoonicorn V2", gambar: "img/produk/ZIMM017.webp", hargaLama: "Rp 27.000", harga: "Rp 20.000", kategori: "livery", owner: "zim", sold: true },
 { nama: "Porsche 911 Gojo Satoru (Gratis W16)", gambar: "img/produk/ZIMM018.webp", hargaLama: "Rp 75.000", harga: "Rp 62.000", kategori: "livery", owner: "zim" , galeri: ["img/altr/gratis_w16.webp"] },
 { nama: "Hilux POKERZz 2GD", gambar: "img/produk/ZIMM019.webp", hargaLama: "Rp 43.000", harga: "Rp 35.000", kategori: "livery", owner: "zim", sold: true },
 { nama: "STOCK AKUN FF 2#", gambar: "img/ff/FF002.webp", hargaLama: "Rp 160.000", harga: "Rp 150.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF002, new: true, galeri: ["img/ff/FF002-2.webp", "img/ff/FF002-3.webp", "img/ff/FF002-4.webp"] },
