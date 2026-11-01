@@ -62,6 +62,7 @@ const PRODUK = [
 { nama: "STOCK AKUN FF 5#", gambar: "img/ff/FF005.webp", hargaLama: "Rp 130.000", harga: "Rp 115.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF005, new: true, galeri: ["img/ff/FF005-2.webp", "img/ff/FF005-3.webp", "img/ff/FF005-4.webp"], sold: true },
 { nama: "STOCK AKUN FF 6#", gambar: "img/ff/FF006.webp", hargaLama: "Rp 115.000", harga: "Rp 100.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF006, new: true, galeri: ["img/ff/FF006-2.webp", "img/ff/FF006-3.webp", "img/ff/FF006-4.webp"], sold: true },
 { nama: "STOCK AKUN FF 7#", gambar: "img/ff/FF007.webp", hargaLama: "Rp 120.000", harga: "Rp 110.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF007, new: true, galeri: ["img/ff/FF007-2.webp", "img/ff/FF007-3.webp"], sold: true },
+{ nama: "STOCK AKUN FF 8#", gambar: "img/ff/FF008.webp", hargaLama: "Rp 133.000", harga: "Rp 120.000", kategori: "akun", game: "ff", owner: "zim", deskripsi: DESK.FF008, new: true, galeri: ["img/ff/FF008-2.webp", "img/ff/FF008-3.webp"], sold: false },
 ];
 
 // Kasih tiap produk "id" (slug) otomatis dari namanya, dipakai di URL
