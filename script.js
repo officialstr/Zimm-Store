@@ -83,93 +83,58 @@ function animasiKartu(root) {
 }
 
 // ==========================================================
-// BERANDA (index.html): strip jasa pinned + 30 produk random
+// BERANDA (index.html): Hot Items + Game/Kategori
 // ==========================================================
-const JUMLAH_RANDOM = 30;
 
-// Urutan random disimpan per sesi, jadi pas balik dari halaman detail
-// (tombol Back) produknya tidak teracak ulang.
-function ambilRandomBeranda() {
-  try {
-    const ids = JSON.parse(sessionStorage.getItem('zimmRandom') || 'null');
-    if (ids) {
-      const list = ids.map(cariProdukById).filter(p => p && !p.sold && !p.pinned);
-      if (list.length) return list;
-    }
-  } catch (e) {}
-  const pool = PRODUK.filter(p => !p.pinned && !p.sold);
-  const list = acakArray(pool).slice(0, JUMLAH_RANDOM);
-  try { sessionStorage.setItem('zimmRandom', JSON.stringify(list.map(p => p.id))); } catch (e) {}
-  return list;
+// Hot Items: pakai produkId (slug nama produk di data.js) supaya gambar & link
+// diambil otomatis dari produknya, atau isi gambar + href sendiri.
+const HOT_ITEMS = [
+  { nama: 'MC/Rekber', produkId: 'mc-rekber' },
+  { nama: 'Akun FF', gambar: 'img/kategori/ff.webp', href: 'kategori.html?game=ff' },
+  { nama: 'Req Livery', produkId: 'custom-design-livery' },
+];
+
+// Game/Kategori di beranda (urutan = urutan tampil)
+const KATEGORI_BERANDA = [
+  { game: 'ff',   nama: 'Free Fire',               gambar: 'img/kategori/ff.webp' },
+  { game: 'cpm1', nama: 'Car Parking Multiplayer', gambar: 'img/kategori/cpm1.webp' },
+  { game: 'jasa', nama: 'Jasa Lainnya',            gambar: 'img/kategori/jasa.webp' },
+];
+
+function hotItemHtml(h) {
+  const p = h.produkId ? cariProdukById(h.produkId) : null;
+  const href = h.href || (p ? `produk.html?id=${encodeURIComponent(p.id)}` : '#');
+  const gambar = h.gambar || (p ? p.gambar : '');
+  return `
+    <a class="card hot-tile" href="${href}">
+      <div class="img-container"><img src="${gambar}" alt="${esc(h.nama)}" loading="lazy" decoding="async" onerror="this.style.display='none'"></div>
+      <div class="card-body"><h4>${esc(h.nama)}</h4></div>
+    </a>`;
 }
 
-// 5 produk sold acak di paling bawah beranda ("Sudah Terjual").
-// Urutannya juga disimpan per sesi, sama seperti produk random di atas.
-const JUMLAH_SOLD = 5;
-function ambilSoldBeranda() {
-  try {
-    const ids = JSON.parse(sessionStorage.getItem('zimmSold') || 'null');
-    if (ids) {
-      const list = ids.map(cariProdukById).filter(p => p && p.sold);
-      if (list.length) return list;
-    }
-  } catch (e) {}
-  const list = acakArray(PRODUK.filter(p => p.sold && !p.pinned)).slice(0, JUMLAH_SOLD);
-  try { sessionStorage.setItem('zimmSold', JSON.stringify(list.map(p => p.id))); } catch (e) {}
-  return list;
-}
-
-function renderSold() {
-  const wrap = document.getElementById('soldWrap');
-  const grid = document.getElementById('soldGrid');
-  if (!wrap || !grid) return;
-  const list = ambilSoldBeranda();
-  if (!list.length) { wrap.style.display = 'none'; return; }
-  grid.innerHTML = list.map(kartuHtml).join('');
-  wrap.style.display = '';
-  animasiKartu(grid);
+function kategoriHtml(k) {
+  // Sisa = jumlah produk kategori ini yang belum sold
+  const sisa = PRODUK.filter(p => gameOf(p) === k.game && !p.sold).length;
+  return `
+    <a class="card kat-card" href="kategori.html?game=${k.game}">
+      <div class="img-container" data-game="${k.game}"><img src="${k.gambar}" alt="${esc(k.nama)}" loading="lazy" decoding="async" onerror="this.style.display='none'"></div>
+      <div class="card-body">
+        <h4>${esc(k.nama)}</h4>
+        <span class="kat-sisa">Sisa: ${sisa}</span>
+      </div>
+    </a>`;
 }
 
 function renderBeranda() {
-  const strip = document.getElementById('pinnedStrip');
-  if (!strip) return; // bukan halaman beranda
-  strip.innerHTML = PRODUK.filter(p => p.pinned)
-    .sort((x, y) => x.pinned - y.pinned)
-    .map(kartuHtml).join('');
-  animasiKartu(strip);
-  isiGrid(ambilRandomBeranda());
-  renderSold();
-}
-
-// Slider kategori (Free Fire - CPM 1 - Jasa): geser / tap slide samar = pindah
-// ke tengah. Tap slide tengah atau tombol "Lihat Produk" = buka halaman kategori.
-function initSliderKategori() {
-  const el = document.querySelector('.katSwiper');
-  const tombol = document.getElementById('btnLihatProduk');
-  if (!el || !tombol || typeof Swiper === 'undefined') return;
-
-  const update = s => { tombol.href = `kategori.html?game=${s.slides[s.activeIndex].dataset.game}`; };
-
-  new Swiper(el, {
-    slidesPerView: 'auto',
-    centeredSlides: true,
-    spaceBetween: 12,
-    loop: true,
-    speed: 350,
-    on: {
-      init: update,
-      slideChange: update,
-      tap(s) {
-        const sl = s.clickedSlide;
-        if (!sl) return;
-        if (sl === s.slides[s.activeIndex]) {
-          window.location.href = `kategori.html?game=${sl.dataset.game}`;
-        } else {
-          s.slideTo(Array.from(s.slides).indexOf(sl));
-        }
-      }
-    }
-  });
+  const hot = document.getElementById('hotGrid');
+  if (!hot) return; // bukan halaman beranda
+  hot.innerHTML = HOT_ITEMS.map(hotItemHtml).join('');
+  const kat = document.getElementById('kategoriGrid');
+  if (kat) kat.innerHTML = KATEGORI_BERANDA.map(kategoriHtml).join('');
+  const hasil = document.getElementById('produkGrid');
+  if (hasil) hasil.innerHTML = ''; // grid ini cuma dipakai untuk hasil pencarian
+  animasiKartu(hot);
+  animasiKartu(kat);
 }
 
 // ==========================================================
@@ -187,10 +152,32 @@ function renderKategori() {
   }
   judul.textContent = GAME_LABEL[game];
   document.title = `${GAME_LABEL[game]} - ZIMM STORE`;
+  const semua = PRODUK.filter(p => gameOf(p) === game);
   isiGrid(
-    PRODUK.filter(p => gameOf(p) === game),
+    semua.filter(p => !p.sold),
     'Produk segera hadir. Hubungi admin untuk info lebih lanjut.'
   );
+  renderTerjualKategori(semua.filter(p => p.sold));
+}
+
+// Bagian "Produk Terjual" (judul di tengah) di bawah produk tersedia.
+// Dibuat otomatis oleh JS, jadi kategori.html tidak perlu diubah.
+function renderTerjualKategori(list) {
+  const grid = document.getElementById('produkGrid');
+  if (!grid) return;
+  let wrap = document.getElementById('soldWrap');
+  if (!list.length) { if (wrap) wrap.style.display = 'none'; return; }
+  if (!wrap) {
+    wrap = document.createElement('section');
+    wrap.id = 'soldWrap';
+    wrap.className = 'sold-wrap';
+    grid.insertAdjacentElement('afterend', wrap);
+  }
+  wrap.innerHTML = '<h3 class="pinned-title">Produk Terjual</h3><div class="produk-grid" id="soldGrid"></div>';
+  wrap.style.display = '';
+  const soldGrid = document.getElementById('soldGrid');
+  soldGrid.innerHTML = list.map(kartuHtml).join('');
+  animasiKartu(soldGrid);
 }
 
 // ==========================================================
@@ -249,12 +236,19 @@ function renderProdukDetail() {
     ? `<button class="btn-order ${p.sold ? 'sold-btn' : 'closed-btn'}" disabled>${btnOrderText}</button>`
     : `<button class="btn-order" onclick="${orderFn}('${orderNama}', this, '${idProduk}')">${btnOrderText}</button>`;
 
+  // Pengingat zoom (hanya kalau produk belum sold, karena sold tidak bisa di-zoom)
+  const zoomHintHtml = p.sold ? "" : `
+        <div class="zoom-hint" aria-hidden="true">
+          <div class="zoom-hint-layar"></div>
+          <span class="zoom-hint-teks">Tekan Gambar Untuk Zoom</span>
+        </div>`;
+
   root.innerHTML = `
     <div class="produk-galeri ${fotoList.length <= 1 ? 'satu-foto' : ''}">
       <div class="swiper produkSwiper">
         <div class="swiper-wrapper">${slidesHtml}</div>
         <div class="swiper-pagination"></div>
-      </div>
+      </div>${zoomHintHtml}
     </div>
 
     <div class="produk-detail-badge">${kategoriBadge}${extraBadges.join('')}</div>
@@ -288,6 +282,19 @@ function renderProdukDetail() {
       loop: fotoList.length > 1,
       pagination: { el: ".swiper-pagination", clickable: true },
     });
+  }
+
+  // Pengingat "Tekan Gambar Untuk Zoom": muncul saat area gambar disentuh / digeser.
+  // Kalau animasinya masih jalan, sentuhan berikutnya tidak mengulang dari awal.
+  const galeri = root.querySelector('.produk-galeri');
+  const hint = galeri && galeri.querySelector('.zoom-hint');
+  if (hint) {
+    const teks = hint.querySelector('.zoom-hint-teks');
+    galeri.addEventListener('pointerdown', () => {
+      if (hint.classList.contains('tampil')) return;
+      hint.classList.add('tampil');
+    });
+    teks.addEventListener('animationend', () => hint.classList.remove('tampil'));
   }
 
   renderProdukRelated(p);
@@ -359,7 +366,7 @@ function shareProduk(namaProduk) {
 // Tampilan skeleton sementara sebelum renderProduk() selesai jalan
 function renderSkeleton(jumlah = 6) {
   const grid = document.getElementById('produkGrid');
-  if (!grid) return;
+  if (!grid || document.getElementById('hotGrid')) return; // beranda tidak punya grid produk
   grid.innerHTML = Array.from({ length: jumlah }).map(() => `
     <div class="skeleton-card">
       <div class="skeleton-img"></div>
@@ -386,7 +393,6 @@ function mulaiHalaman() {
   // biar fitur zoom & filter di bawah ini kebagian elemen yang baru dibuat)
   renderBeranda();
   renderKategori();
-  initSliderKategori();
 
   // -1b. Kalau ini halaman produk.html, render detail produknya
   renderProdukDetail();
@@ -894,12 +900,8 @@ function orderAkunFF(nama, element, idProduk) {
   if (element && element.closest('.card.sold')) {
     return; // Produk sold out, order dibatalkan
   }
-  const pesan = [
-    "*Halo ZimmStore aku ingin memesan ff*",
-    `*Pesanan:* ${nama}`,
-    `*ID Produk:* ${idProduk}`,
-    "*Payment: QRIS All Payment*"
-  ].join("\n");
+  // idProduk = kode produk dari nama file gambar (misal FF001 / FF012)
+  const pesan = `Halo min.. aku mau angkut ${idProduk || nama}`;
 
   window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
 }
@@ -916,7 +918,7 @@ function orderCustomDesign(nama, element) {
 
 // 3c. Order untuk jasa umum (MC/Rekber, Jasa W16, dll)
 function orderJasa(nama, element) {
-  const pesan = `*Halo Zimm Store Aku Ingin Memesan ${nama}*\n*Nama (In-Game):*\n*UID CPM 1:*`;
+  const pesan = `*Halo Min Aku Ingin Memesan ${nama}*\n*Nama (In-Game):*\n*UID CPM 1:*`;
 
   window.open(`https://wa.me/${nomorWA}?text=${encodeURIComponent(pesan)}`, '_blank');
 }
@@ -924,7 +926,7 @@ function orderJasa(nama, element) {
 // 3d. Order khusus MC/Rekber
 function orderMc(nama, element) {
   const pesan = [
-    "*Halo ZimmStore Aku Ingin Pakai Jasa MC/Rekber*",
+    "*Halo Min Aku Ingin Pakai Jasa MC/Rekber*",
     "",
     "_*BACA PERATURAN‼️:*_",
     "✅️ Pastikan tunggu admin merespon (bukan bot yang merespon) sebelum diculik ke grup.",
@@ -938,19 +940,35 @@ function orderMc(nama, element) {
 }
 
 // 5. Fungsi Search Produk (cari di semua produk, bukan cuma yang tampil)
+// Teks yang dicari untuk 1 produk: nama + deskripsi (tag HTML seperti <br> dibuang).
+// Hasilnya disimpan di produk supaya tidak dihitung ulang tiap ketikan.
+function teksCariProduk(p) {
+  if (!p._cari) {
+    const desk = String(p.deskripsi || (typeof deskripsiDefault === 'function' ? deskripsiDefault(p) : ''))
+      .replace(/<[^>]*>/g, ' ');
+    p._cari = `${p.nama} ${desk}`.toLowerCase().replace(/\s+/g, ' ');
+  }
+  return p._cari;
+}
+
 function searchProduk() {
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  const pinnedWrap = document.getElementById('pinnedWrap');
-  const soldWrap = document.getElementById('soldWrap');
+  const hotWrap = document.getElementById('hotWrap');
+  const kategoriWrap = document.getElementById('kategoriWrap');
   if (!q) {
-    if (pinnedWrap) pinnedWrap.style.display = "";
-    isiGrid(ambilRandomBeranda());
-    renderSold();
+    // Tidak mencari: tampilkan lagi Hot Items & Game/Kategori, kosongkan hasil
+    if (hotWrap) hotWrap.style.display = "";
+    if (kategoriWrap) kategoriWrap.style.display = "";
+    const grid = document.getElementById('produkGrid');
+    if (grid) grid.innerHTML = '';
     return;
   }
-  if (pinnedWrap) pinnedWrap.style.display = "none";
-  if (soldWrap) soldWrap.style.display = "none"; // hasil pencarian sudah memuat produk sold juga
-  isiGrid(PRODUK.filter(p => p.nama.toLowerCase().includes(q)));
+  if (hotWrap) hotWrap.style.display = "none";
+  if (kategoriWrap) kategoriWrap.style.display = "none";
+  // Cocok kalau FRASA yang diketik (urutan kata persis, misal "sg meteor") ada
+  // di nama atau deskripsi produk. Spasi ganda dirapikan jadi satu.
+  const frasa = q.replace(/\s+/g, ' ');
+  isiGrid(PRODUK.filter(p => teksCariProduk(p).includes(frasa)));
 }
 
 // 6. Fungsi Dropdown Menu Titik Tiga
@@ -1047,3 +1065,36 @@ function initTema() {
   kanan.insertBefore(btn, kanan.firstChild);
 }
 initTema();
+
+
+// Tombol "Kembali": balik ke halaman sebelumnya kalau sebelumnya memang sedang di
+// situs ini. Kalau halaman ini dibuka langsung (tanpa halaman sebelumnya di situs),
+// pergi ke beranda.
+//
+// Penghitung kunjungan per tab: dipakai kalau browser tidak mengirim "referrer"
+// (misalnya diatur situs/hosting), supaya tombol tetap tahu ada halaman sebelumnya.
+(function hitungKunjungan() {
+  try {
+    const nav = performance.getEntriesByType('navigation')[0];
+    // reload & tombol back/forward browser tidak dihitung sebagai kunjungan baru
+    if (!nav || nav.type === 'navigate') {
+      sessionStorage.setItem('zimmHal', String((parseInt(sessionStorage.getItem('zimmHal'), 10) || 0) + 1));
+    }
+  } catch (e) {}
+})();
+
+function kembaliHalaman() {
+  let dariSitus = false;
+  try {
+    if (document.referrer) {
+      dariSitus = new URL(document.referrer).host === window.location.host;
+    } else {
+      dariSitus = (parseInt(sessionStorage.getItem('zimmHal'), 10) || 0) > 1;
+    }
+  } catch (e) {}
+  if (dariSitus && window.history.length > 1) {
+    window.history.back();
+    return false; // jangan ikuti href beranda
+  }
+  return true;    // tidak ada halaman sebelumnya: ikuti href="index.html"
+}

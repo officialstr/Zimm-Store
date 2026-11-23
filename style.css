@@ -19,15 +19,13 @@ body {
 .container { max-width: 1000px; margin: 0 auto; padding: 0 15px; }
 
 .header { 
-  background: rgba(10, 12, 20, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--primary); /* Biru Neon */
   border-radius: 18px;
   margin: 10px 15px 0;
   padding: 10px 8px; 
   position: sticky; 
   top: 10px; z-index: 100; 
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 20px rgba(31, 81, 255, 0.45);
 }
 
 .header .container {
@@ -36,9 +34,10 @@ body {
 .header-flex { display: flex; align-items: center; justify-content: space-between; }
 .logo-area { display: flex; align-items: center; gap: 3px; }
 .logo { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; }
+.brand-img { height: 27px; width: auto; display: block; object-fit: contain; }
 .brand-title { font-size: 22px; font-weight: 800; color: #fff; margin: 0; }
 
-/* --- PENGATURAN BANNER RASIO 3:2 --- */
+/* --- PENGATURAN BANNER RASIO 16:9 (LANDSCAPE) --- */
 /* Swiper dilebarin 15px ke kiri-kanan (nutupin padding container) lalu dikasih padding 15px,
    jadi ukuran slide tetap sama tapi shadow punya ruang & gak kepotong di pojok */
 .mySwiper { width: calc(100% + 30px); margin: 0 -15px; padding: 20px 0 40px; overflow: hidden; }
@@ -48,6 +47,7 @@ body {
 .mySwiper .swiper-slide {
   width: min(92%, 960px);
   height: auto;
+  aspect-ratio: 16 / 9; /* Slider utama landscape 16:9 */
   opacity: 0.4;
   transform: scale(0.92);
   transition: opacity .5s ease, transform .5s cubic-bezier(.25, .8, .25, 1);
@@ -383,7 +383,8 @@ body {
 /* --- FOOTER FINAL VERSION (BLUE NEON) --- */
 .main-footer {
   background: var(--primary); /* Biru Neon */
-  padding: 10px 0 30px 0;
+  /* Ruang bawah ekstra supaya tulisan © tidak ketutup tombol mengambang (Hubungi Admin & gulir ke atas) */
+  padding: 10px 0 calc(90px + env(safe-area-inset-bottom, 0px)) 0;
   margin-top: 60px;
   text-align: left; /* Rata kiri untuk info */
   color: #ffffff;   /* Semua teks putih */
@@ -397,8 +398,8 @@ body {
 }
 
 .footer-logo-img {
-  width: 45px;
-  height: 45px;
+  height: 32px;
+  width: auto;
 }
 
 .footer-logo {
@@ -472,6 +473,7 @@ body {
 .header-right {
   display: flex;
   align-items: center;
+  gap: 0;
 }
 
 .menu-wrapper {
@@ -480,39 +482,47 @@ body {
 }
 
 .kebab-icon {
-  /* Ukuran dikunci (sama persis dengan ukuran 3 titik) biar tombol gak goyang pas berubah jadi silang */
-  width: 24.5px;
-  height: 40.5px;
+  /* Ukuran sama dengan ikon navbar lain (36x36) */
+  width: 30px;
+  height: 32px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 3.5px;
-  border-radius: 50%;
+  gap: 4px;
+  border-radius: 8px;
   transition: 0.3s;
-  -webkit-tap-highlight-color: transparent; /* hilangin kilatan abu-abu bawaan browser HP pas ditap */
+  -webkit-tap-highlight-color: transparent;
   outline: none;
 }
 
 .kebab-icon span {
-  width: 4.5px;
-  height: 4.5px;
-  background-color: #fff;
-  border-radius: 50%;
-  display: block;
-  transition: transform 0.3s ease, opacity 0.2s ease, width 0.3s ease, height 0.3s ease, border-radius 0.3s ease;
-}
-
-/* Pas menu kebuka: 3 titik berubah jadi tanda silang (X) */
-.kebab-icon.active span {
   width: 20px;
   height: 2.5px;
+  background-color: #fff;
   border-radius: 2px;
+  display: block;
+  transition: transform 0.3s ease, opacity 0.2s ease;
 }
-.kebab-icon.active span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+
+/* Pas menu kebuka: garis tiga berubah jadi tanda silang (X) */
+.kebab-icon.active span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
 .kebab-icon.active span:nth-child(2) { opacity: 0; }
-.kebab-icon.active span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.kebab-icon.active span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+/* Tombol akun (WhatsApp admin) - ukuran sama dengan ikon lain */
+.account-btn {
+  width: 30px; height: 32px;
+  padding: 0;
+  border-radius: 8px;
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.account-btn svg { width: 22px; height: 22px; }
+.account-btn:active { background: rgba(255, 255, 255, .12); }
 
 /* DROPDOWN BOX */
 .dropdown-content {
@@ -543,11 +553,15 @@ body {
   text-decoration: none;
   display: flex;
   align-items: center;
+  gap: 14px;
   font-size: 16px;
   font-weight: 700;
   border-radius: 12px;
   transition: 0.3s;
 }
+
+.dropdown-content a svg { width: 22px; height: 22px; flex-shrink: 0; }
+.logo-area .logo-link { display: flex; align-items: center; }
 
 .dropdown-content a:hover {
   background-color: rgba(255, 255, 255, 0.08);
@@ -558,6 +572,7 @@ body {
   background: var(--primary);
   color: white;
   justify-content: center;
+  gap: 10px;
   font-weight: 800;
   margin-top: 6px;
   box-shadow: 0 4px 12px rgba(31, 81, 255, 0.3);
@@ -846,7 +861,28 @@ body.zoom-lock {
   box-shadow: 0 6px 16px rgba(37, 211, 102, .45);
 }
 .wa-float svg { width: 20px; height: 20px; flex-shrink: 0; }
-.wa-float:active { transform: scale(.96); }
+
+/* Siklus 8 detik: pop masuk (0,5 dtk) -> denyut pelan (5 dtk) -> pop keluar (0,5 dtk) -> hilang (2 dtk) */
+.wa-float {
+  transform-origin: center;
+  animation: waSiklus 8s ease-in-out infinite;
+}
+@keyframes waSiklus {
+  0%      { transform: scale(0);    opacity: 0; visibility: visible; }
+  4%      { transform: scale(1.15); opacity: 1; }          /* pop masuk (membal sedikit) */
+  6.25%   { transform: scale(1);    opacity: 1; }
+  21.875% { transform: scale(1.07); }                      /* denyut pelan #1 */
+  37.5%   { transform: scale(1); }
+  53.125% { transform: scale(1.07); }                      /* denyut pelan #2 */
+  68.75%  { transform: scale(1);    opacity: 1; }
+  70%     { transform: scale(1.1);  opacity: 1; }          /* pop keluar */
+  75%     { transform: scale(0);    opacity: 0; visibility: visible; }
+  75.01%  { transform: scale(0);    opacity: 0; visibility: hidden; }   /* hilang sejenak 2 dtk */
+  100%    { transform: scale(0);    opacity: 0; visibility: hidden; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-float { animation: none; }
+}
 
 .btn-top {
   position: fixed;
@@ -856,17 +892,20 @@ body.zoom-lock {
   width: 40px; height: 40px;
   border: 0;
   border-radius: 50%;
-  background: var(--primary);
+  background: rgba(31, 81, 255, .72);   /* lingkaran biru sedikit transparan */
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
   color: #fff;
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 6px 16px rgba(31, 81, 255, .4);
+  box-shadow: 0 4px 12px rgba(31, 81, 255, .35);
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, 12px);
   transition: opacity .25s ease, transform .25s ease;
+  -webkit-tap-highlight-color: transparent;
 }
-.btn-top svg { width: 20px; height: 20px; }
+.btn-top svg { width: 24px; height: 24px; }
 .btn-top.show { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
 .btn-top:active { transform: translate(-50%, 0) scale(.94); }
 
@@ -892,18 +931,17 @@ body.zoom-lock .wa-float, body.zoom-lock .btn-top { display: none; }
 /* TOMBOL MODE GELAP di navbar */
 /* ========================================================== */
 .theme-toggle {
-  width: 36px; height: 36px;
-  margin-right: 4px;
+  width: 30px; height: 32px;
   padding: 0;
   border: 0;
-  border-radius: 50%;
+  border-radius: 8px;
   background: transparent;
   color: #fff;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.theme-toggle svg { width: 20px; height: 20px; }
+.theme-toggle svg { width: 22px; height: 22px; }
 .theme-toggle:active { background: rgba(255, 255, 255, .12); }
 
 /* ========================================================== */
@@ -978,3 +1016,114 @@ html[data-theme="dark"] .aturan-card-body p,
 html[data-theme="dark"] .aturan-card-body li,
 html[data-theme="dark"] .aturan-card-body,
 html[data-theme="dark"] .aturan-heading p { color: #f1f4fb !important; }
+
+.logo-area .brand-img { margin-left: -10px; }  /* navbar */
+.footer-logo-img { margin-left: -15px; }       /* footer */
+
+
+/* ========================================================== */
+/* BERANDA: Hot Items & Game/Kategori */
+/* ========================================================== */
+.beranda-sec { margin: 6px 0 22px; }
+
+/* Hot Items: 3 kartu sebaris */
+.hot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.hot-tile, .kat-card { text-decoration: none; color: inherit; }
+.hot-tile { border: 1.5px solid #ff4757; order: 0; }
+.hot-tile .card-body { padding: 9px 6px; justify-content: center; }
+.hot-tile .card-body h4 { text-align: center; font-size: 12px; cursor: pointer; }
+
+/* Game/Kategori: grid seperti produk, keterangan = nama + sisa produk */
+.kat-card { order: 0; }
+.kat-card .card-body { gap: 4px; }
+.kat-card .card-body h4 { white-space: normal; line-height: 1.3; }
+.kat-sisa { font-size: 11.5px; font-weight: 700; color: var(--teks-biru, var(--primary)); }
+.img-container[data-game="ff"]   { background: linear-gradient(135deg, #ff7a18, #af002d); }
+.img-container[data-game="cpm1"] { background: linear-gradient(135deg, var(--primary), #0a1f6b); }
+.img-container[data-game="jasa"] { background: linear-gradient(135deg, #11998e, #0b4f6c); }
+
+
+/* ========================================================== */
+/* TOMBOL KEMBALI (semua halaman kecuali beranda) */
+/* ========================================================== */
+.btn-kembali {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 15px 0;
+  padding: 13px 20px;
+  border-radius: 18px;
+  background: var(--primary); /* Biru Neon, sama dengan navbar */
+  color: #fff;
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(31, 81, 255, 0.45);
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-kembali svg { width: 20px; height: 20px; flex-shrink: 0; }
+.btn-kembali:active { filter: brightness(.9); }
+
+
+/* ========================================================== */
+/* PENGINGAT "TEKAN GAMBAR UNTUK ZOOM" (produk.html)           */
+/* Total 4 dtk: pop masuk 0,5 -> denyut hilang-muncul 3 -> pop keluar 0,5 */
+/* Layar gelap (20%) ikut animasi teks: teks muncul = gelap, teks hilang = terang */
+/* ========================================================== */
+.produk-galeri { position: relative; }
+
+.zoom-hint {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  overflow: hidden;
+  pointer-events: none; /* tidak menghalangi sentuhan/geser/klik gambar */
+}
+.zoom-hint.tampil { display: flex; }
+
+.zoom-hint-layar {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: 0;
+}
+.zoom-hint-teks {
+  position: relative;
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, .45);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0;
+  transform: scale(0);
+}
+.zoom-hint.tampil .zoom-hint-layar { animation: zoomHintLayar 4s linear both; }
+.zoom-hint.tampil .zoom-hint-teks  { animation: zoomHintTeks 4s linear both; }
+
+@keyframes zoomHintTeks {
+  0%     { opacity: 0; transform: scale(0); }
+  8%     { opacity: 1; transform: scale(1.12); }   /* pop masuk (0,5 dtk) */
+  12.5%  { opacity: 1; transform: scale(1); }
+  31.25% { opacity: 0; transform: scale(.96); }    /* denyut: hilang */
+  50%    { opacity: 1; transform: scale(1); }      /* denyut: muncul */
+  68.75% { opacity: 0; transform: scale(.96); }
+  87.5%  { opacity: 1; transform: scale(1); }      /* 3 dtk denyut selesai */
+  92%    { opacity: 1; transform: scale(1.1); }
+  100%   { opacity: 0; transform: scale(0); }      /* pop keluar (0,5 dtk) */
+}
+@keyframes zoomHintLayar {
+  0%     { opacity: 0; }
+  12.5%  { opacity: .2; }
+  31.25% { opacity: 0; }
+  50%    { opacity: .2; }
+  68.75% { opacity: 0; }
+  87.5%  { opacity: .2; }
+  100%   { opacity: 0; }
+}
